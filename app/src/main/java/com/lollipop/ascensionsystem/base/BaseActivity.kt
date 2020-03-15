@@ -19,6 +19,8 @@ abstract class BaseActivity: AppCompatActivity() {
 
     abstract val layoutId: Int
 
+    protected var isShowBack = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
@@ -52,6 +54,11 @@ abstract class BaseActivity: AppCompatActivity() {
         backBtn.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        backBtn.visibility = if (isShowBack) { View.VISIBLE } else { View.GONE }
     }
 
     override fun onResume() {
