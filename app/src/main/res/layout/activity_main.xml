@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
+    <ImageView
+        android:id="@+id/humanView"
+        android:layout_width="100dp"
+        android:layout_height="0px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1:3.3"
+        android:src="@drawable/ic_women"
+        android:scaleType="centerInside"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
