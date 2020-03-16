@@ -27,7 +27,7 @@
             android:layout_height="match_parent"/>
 
         <View
-            app:layout_constraintHeight_percent="0.17"
+            app:layout_constraintHeight_percent="0.16"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintTop_toTopOf="@id/humanView"
             app:layout_constraintLeft_toLeftOf="@id/humanView"
@@ -50,8 +50,26 @@
             app:layout_constraintLeft_toLeftOf="@id/humanView"
             app:layout_constraintTop_toTopOf="@id/bodyBtn"
             app:layout_constraintRight_toLeftOf="@id/bodyBtn"
-            app:layout_constraintHeight_percent="0.43"
+            app:layout_constraintHeight_percent="0.20"
             android:id="@+id/leftArmBtn"
+            android:layout_width="0px"
+            android:layout_height="0px" />
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/leftArmBtn"
+            app:layout_constraintTop_toBottomOf="@id/leftArmBtn"
+            app:layout_constraintRight_toRightOf="@id/leftArmBtn"
+            app:layout_constraintHeight_percent="0.14"
+            android:id="@+id/leftForearmBtn"
+            android:layout_width="0px"
+            android:layout_height="0px" />
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/leftForearmBtn"
+            app:layout_constraintTop_toBottomOf="@id/leftForearmBtn"
+            app:layout_constraintRight_toRightOf="@id/leftForearmBtn"
+            app:layout_constraintHeight_percent="0.10"
+            android:id="@+id/leftHandBtn"
             android:layout_width="0px"
             android:layout_height="0px" />
 
@@ -60,8 +78,26 @@
             app:layout_constraintRight_toRightOf="@id/humanView"
             app:layout_constraintTop_toTopOf="@id/bodyBtn"
             app:layout_constraintLeft_toRightOf="@id/bodyBtn"
-            app:layout_constraintHeight_percent="0.43"
+            app:layout_constraintHeight_percent="0.20"
             android:id="@+id/rightArmBtn"
+            android:layout_width="0px"
+            android:layout_height="0px" />
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/rightArmBtn"
+            app:layout_constraintTop_toBottomOf="@id/rightArmBtn"
+            app:layout_constraintRight_toRightOf="@id/rightArmBtn"
+            app:layout_constraintHeight_percent="0.14"
+            android:id="@+id/rightForearmBtn"
+            android:layout_width="0px"
+            android:layout_height="0px" />
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/rightForearmBtn"
+            app:layout_constraintTop_toBottomOf="@id/rightForearmBtn"
+            app:layout_constraintRight_toRightOf="@id/rightForearmBtn"
+            app:layout_constraintHeight_percent="0.10"
+            android:id="@+id/rightHandBtn"
             android:layout_width="0px"
             android:layout_height="0px" />
 
@@ -69,9 +105,31 @@
             app:layout_constraintLeft_toLeftOf="@id/humanView"
             app:layout_constraintRight_toLeftOf="@id/rightLegBtn"
             app:layout_constraintTop_toBottomOf="@id/bodyBtn"
-            app:layout_constraintBottom_toBottomOf="@id/humanView"
             app:layout_constraintWidth_percent="0.34"
+            app:layout_constraintHeight_percent="0.2"
             android:id="@+id/leftLegBtn"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/leftLegBtn"
+            app:layout_constraintRight_toRightOf="@id/leftLegBtn"
+            app:layout_constraintTop_toBottomOf="@id/leftLegBtn"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintHeight_percent="0.2"
+            android:id="@+id/leftCalfBtn"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/leftCalfBtn"
+            app:layout_constraintRight_toRightOf="@id/leftCalfBtn"
+            app:layout_constraintTop_toBottomOf="@id/leftCalfBtn"
+            app:layout_constraintBottom_toBottomOf="@id/humanView"
+            app:layout_constraintWidth_percent="0.3"
+            android:id="@+id/leftFootBtn"
             android:layout_width="0px"
             android:layout_height="0px"
             app:layout_constraintHorizontal_chainStyle="packed"/>
@@ -80,11 +138,33 @@
             app:layout_constraintRight_toRightOf="@id/humanView"
             app:layout_constraintLeft_toRightOf="@id/leftLegBtn"
             app:layout_constraintTop_toBottomOf="@id/bodyBtn"
-            app:layout_constraintBottom_toBottomOf="@id/humanView"
             app:layout_constraintWidth_percent="0.34"
+            app:layout_constraintHeight_percent="0.2"
             android:id="@+id/rightLegBtn"
             android:layout_width="0px"
             android:layout_height="0px" />
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/rightLegBtn"
+            app:layout_constraintRight_toRightOf="@id/rightLegBtn"
+            app:layout_constraintTop_toBottomOf="@id/rightLegBtn"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintHeight_percent="0.2"
+            android:id="@+id/rightCalfBtn"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <View
+            app:layout_constraintLeft_toLeftOf="@id/rightCalfBtn"
+            app:layout_constraintRight_toRightOf="@id/rightCalfBtn"
+            app:layout_constraintTop_toBottomOf="@id/rightCalfBtn"
+            app:layout_constraintBottom_toBottomOf="@id/humanView"
+            app:layout_constraintWidth_percent="0.3"
+            android:id="@+id/rightFootBtn"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
