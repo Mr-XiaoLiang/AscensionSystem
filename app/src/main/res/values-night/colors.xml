@@ -9,4 +9,6 @@
 
     <color name="contentBackground">#292929</color>
 
+    <color name="messageGroupBorder">#515151</color>
+
 </resources>
