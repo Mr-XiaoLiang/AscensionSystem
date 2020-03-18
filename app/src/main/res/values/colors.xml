@@ -11,4 +11,7 @@
 
     <color name="messageGroupBorder">#BDBDBD</color>
 
+    <color name="attributesTitle">#707070</color>
+    <color name="attributesValue">#393939</color>
+
 </resources>

@@ -30,6 +30,15 @@
         android:layout_marginRight="@dimen/windowPaddingHorizontal"
         android:src="@drawable/ic_man" />
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="0px"
+        android:background="@color/messageGroupBorder"
+        app:layout_constraintLeft_toLeftOf="@id/centerAnchor"
+        app:layout_constraintRight_toRightOf="@id/centerAnchor"
+        app:layout_constraintTop_toTopOf="@id/miniHumanView"
+        app:layout_constraintBottom_toBottomOf="@id/miniHumanView"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0px"
         android:layout_height="0px"
@@ -40,7 +49,6 @@
         app:layout_constraintBottom_toBottomOf="@id/miniHumanView"
         android:layout_marginLeft="@dimen/windowPaddingHorizontal"
         android:layout_marginRight="@dimen/windowPaddingHorizontal"
-        android:background="@drawable/bg_message_group"
         android:padding="3dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
