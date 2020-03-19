@@ -58,13 +58,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/centerAnchor"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/navigationView"
         android:layout_marginTop="@dimen/windowPaddingVertical"
         android:layout_marginBottom="@dimen/windowPaddingVertical"
         android:layout_marginLeft="@dimen/windowPaddingHorizontal"
         android:layout_marginRight="@dimen/windowPaddingHorizontal"
         android:background="@drawable/bg_message_group"
         android:padding="3dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:visibility="gone"
