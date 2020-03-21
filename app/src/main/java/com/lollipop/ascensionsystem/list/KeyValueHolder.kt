@@ -14,13 +14,20 @@ import com.lollipop.ascensionsystem.view.CapabilityBar
  * @date 2020/3/21 21:44
  * 键值对的Item
  */
-class KeyValueHolder private constructor(view: View): RecyclerView.ViewHolder(view) {
+class KeyValueHolder private constructor(view: View, private val onClick: (KeyValueHolder) -> Unit):
+    RecyclerView.ViewHolder(view) {
 
     companion object {
-        fun create(group: ViewGroup): KeyValueHolder {
+        fun create(group: ViewGroup, onClick: (KeyValueHolder) -> Unit): KeyValueHolder {
             return KeyValueHolder(
                 LayoutInflater.from(group.context)
-                    .inflate(R.layout.item_key_value, group, false))
+                    .inflate(R.layout.item_key_value, group, false), onClick)
+        }
+    }
+
+    init {
+        view.setOnClickListener {
+            onClick.invoke(this)
         }
     }
 

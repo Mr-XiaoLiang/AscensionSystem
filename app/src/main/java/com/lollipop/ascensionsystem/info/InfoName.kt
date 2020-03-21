@@ -11,7 +11,7 @@ import com.lollipop.ascensionsystem.util.range
  */
 object InfoName {
 
-    fun Context.powerName(power: Float, road: Int): String {
+    fun powerName(context: Context, power: Float, road: Int): String {
         val levelId = when(road) {
             RoadInfo.Truth.value -> R.array.level_truth
             RoadInfo.Buddha.value -> R.array.level_buddha
@@ -19,7 +19,7 @@ object InfoName {
             RoadInfo.Ghost.value -> R.array.level_ghost
             else -> R.array.level_truth
         }
-        val levelArray = resources.getStringArray(levelId)
+        val levelArray = context.resources.getStringArray(levelId)
         val level = power.toInt()
         val levelName = levelArray[level.range(0, levelArray.size)]
         return "V$level($levelName)"

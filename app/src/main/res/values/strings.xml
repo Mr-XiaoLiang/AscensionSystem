@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">AscensionSystem</string>
+    
+    <string name="gender">性别</string>
+    <string name="power">修为</string>
+    <string name="race">种族</string>
+    <string name="male">雄性</string>
+    <string name="female">雌性</string>
+
+    <string name="truth">仙</string>
+    <string name="buddha">佛</string>
+    <string name="devil">魔</string>
+    <string name="ghost">鬼</string>
+    
     <string-array name="level_truth">
         <item>练气</item>
         <item>筑基</item>
