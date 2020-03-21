@@ -32,6 +32,14 @@ class CapabilityBar(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         }
     }
 
+    fun progress(float: Float) {
+        barDrawable.progress = float
+    }
+
+    fun color(color: Int) {
+        barDrawable.color = color
+    }
+
     private class BarDrawable: Drawable() {
 
         private val paint = Paint().apply {

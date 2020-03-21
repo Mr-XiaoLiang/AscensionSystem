@@ -1,3 +1,111 @@
 <resources>
     <string name="app_name">AscensionSystem</string>
+    <string-array name="level_truth">
+        <item>练气</item>
+        <item>筑基</item>
+        <item>金丹</item>
+        <item>元婴</item>
+        <item>化神</item>
+        <item>炼虚</item>
+        <item>合体</item>
+        <item>渡劫</item>
+        <item>大乘</item>
+        <item>半仙</item>
+        <item>人仙</item>
+        <item>地仙</item>
+        <item>天仙</item>
+        <item>金仙</item>
+        <item>真仙</item>
+        <item>太乙</item>
+        <item>太初</item>
+        <item>大罗</item>
+        <item>仙王</item>
+        <item>仙尊</item>
+        <item>仙帝</item>
+        <item>道尊</item>
+        <item>道祖</item>
+        <item>神灵</item>
+    </string-array>
+
+    <string-array name="level_buddha">
+        <item>聚元</item>
+        <item>明心</item>
+        <item>清心</item>
+        <item>乐福</item>
+        <item>无谷</item>
+        <item>行者</item>
+        <item>舍利</item>
+        <item>涅盘</item>
+        <item>金身</item>
+        <item>渡劫</item>
+        <item>心劫</item>
+        <item>天人</item>
+        <item>灵心</item>
+        <item>觉悟</item>
+        <item>声闻</item>
+        <item>缘觉</item>
+        <item>萨埵</item>
+        <item>意散</item>
+        <item>太虚</item>
+        <item>青灵</item>
+        <item>大乘</item>
+        <item>神佛</item>
+        <item>佛祖</item>
+        <item>神灵</item>
+    </string-array>
+
+    <string-array name="level_devil">
+        <item>炼体</item>
+        <item>聚气</item>
+        <item>凝元</item>
+        <item>意欲</item>
+        <item>元神</item>
+        <item>炼神</item>
+        <item>外相</item>
+        <item>离识</item>
+        <item>合体</item>
+        <item>吞噬</item>
+        <item>无幽</item>
+        <item>梦魇</item>
+        <item>开魔</item>
+        <item>魔劫</item>
+        <item>真魔</item>
+        <item>天魔</item>
+        <item>魔将</item>
+        <item>魔君</item>
+        <item>魔王</item>
+        <item>魔帝</item>
+        <item>魔神</item>
+        <item>魔皇</item>
+        <item>魔祖</item>
+        <item>神灵</item>
+    </string-array>
+
+    <string-array name="level_ghost">
+        <item>开智</item>
+        <item>启灵</item>
+        <item>幻相</item>
+        <item>凝形</item>
+        <item>游魂</item>
+        <item>行鬼</item>
+        <item>结丹</item>
+        <item>转生</item>
+        <item>白骨</item>
+        <item>无垢</item>
+        <item>还阳</item>
+        <item>化鬼</item>
+        <item>鬼劫</item>
+        <item>恶魔</item>
+        <item>鬼兵</item>
+        <item>鬼使</item>
+        <item>鬼将</item>
+        <item>鬼君</item>
+        <item>鬼王</item>
+        <item>鬼帝</item>
+        <item>鬼神</item>
+        <item>鬼皇</item>
+        <item>鬼祖</item>
+        <item>神灵</item>
+    </string-array>
+
 </resources>

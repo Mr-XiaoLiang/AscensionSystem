@@ -14,4 +14,6 @@
     <color name="attributesTitle">#707070</color>
     <color name="attributesValue">#393939</color>
 
+    <color name="colorPower">#2196F3</color>
+
 </resources>

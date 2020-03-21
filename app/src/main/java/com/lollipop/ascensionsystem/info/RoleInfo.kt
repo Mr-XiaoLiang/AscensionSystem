@@ -13,7 +13,18 @@ class RoleInfo {
         /**
          * 性别
          */
-        val isMale = RoleKey("isMale", false)
+        val IsMale = RoleKey("isMale", false)
+
+        /**
+         * 种族
+         */
+        val Race = RoleKey("Race", "?")
+
+        /**
+         * 修为
+         */
+        val Power = RoleKey("Race", 0F)
+
     }
 
     private val infoImpl = InfoImpl()
