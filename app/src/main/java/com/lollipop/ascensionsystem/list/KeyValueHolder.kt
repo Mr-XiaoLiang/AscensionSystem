@@ -45,7 +45,7 @@ class KeyValueHolder private constructor(view: View, private val onClick: (KeyVa
         } else {
             barView.visibility = View.VISIBLE
             barView.progress(info.progress)
-            barView.color(info.barColor)
+            barView.colorFromRes(info.barColor)
         }
     }
 

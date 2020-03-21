@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import kotlin.math.min
 
 /**
@@ -38,6 +39,10 @@ class CapabilityBar(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
     fun color(color: Int) {
         barDrawable.color = color
+    }
+
+    fun colorFromRes(id: Int) {
+        color(ContextCompat.getColor(context, id))
     }
 
     private class BarDrawable: Drawable() {

@@ -25,6 +25,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        roleInfo.put(RoleInfo.Power, 2.4F)
         initAttributesList()
     }
 
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity() {
                     val power = roleInfo.get(attr as RoleInfo.FloatRoleKey)
                     val value = InfoName.powerName(this, power, roleInfo.get(RoleInfo.Race))
                     KeyValueHolderInfo(0, getString(attr.name), value,
-                        power, attr.barColor)
+                        InfoName.powerProgress(power), attr.barColor)
                 }
                 is RoleInfo.FloatRoleKey -> {
                     KeyValueHolderInfo(0,
