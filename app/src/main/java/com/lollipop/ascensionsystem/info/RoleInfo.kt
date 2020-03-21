@@ -34,7 +34,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          * 修为
          */
         @JvmStatic
-        val Power = FloatRoleKey("Power", 0F, R.string.power)
+        val Power = FloatRoleKey("Power", 0F, R.string.power, R.color.colorPower)
 
         /**
          * 空
@@ -106,7 +106,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
 
     }
 
-    class FloatRoleKey(key: String, defValue: Float, name: Int):
+    class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int):
         RoleKey<Float>(key, defValue, name) {
 
         override fun createValue(value: Float, context: Context): String {

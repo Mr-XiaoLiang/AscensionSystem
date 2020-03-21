@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.base.BaseActivity
+import com.lollipop.ascensionsystem.info.InfoName
 import com.lollipop.ascensionsystem.info.KeyValueHolderInfo
 import com.lollipop.ascensionsystem.info.RoleInfo
 import com.lollipop.ascensionsystem.list.KeyValueHolder
@@ -41,13 +42,26 @@ class MainActivity : BaseActivity() {
     private fun updateAttributes() {
         attributesAdapter.clear()
         for (attr in RoleInfo.Attributes) {
-            if (attr == RoleInfo.Race) {
-
+            val info = when(attr) {
+                RoleInfo.Power -> {
+                    val power = roleInfo.get(attr as RoleInfo.FloatRoleKey)
+                    val value = InfoName.powerName(this, power, roleInfo.get(RoleInfo.Race))
+                    KeyValueHolderInfo(0, getString(attr.name), value,
+                        power, attr.barColor)
+                }
+                is RoleInfo.FloatRoleKey -> {
+                    KeyValueHolderInfo(0,
+                        getString(attr.name), attr.getValue(this, roleInfo),
+                        roleInfo.get(attr), attr.barColor)
+                }
+                else -> {
+                    KeyValueHolderInfo(0,
+                        getString(attr.name), attr.getValue(this, roleInfo))
+                }
             }
-            attributesAdapter.add(
-                KeyValueHolderInfo(0,
-                    getString(attr.name), attr.getValue(this, roleInfo)))
+            attributesAdapter.add(info)
         }
+        attributesAdapter.notifyDataSetChanged()
     }
 
     private class AttributesAdapter(val onClick: (KeyValueHolder) -> Unit):

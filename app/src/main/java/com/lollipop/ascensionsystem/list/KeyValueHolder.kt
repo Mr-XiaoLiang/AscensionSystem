@@ -31,22 +31,16 @@ class KeyValueHolder private constructor(view: View, private val onClick: (KeyVa
         }
     }
 
-    private val titleView: TextView by lazy {
-        itemView.findViewById(R.id.nameView)
-    }
+    private val titleView = itemView.findViewById<TextView>(R.id.nameView)
 
-    private val valueView: TextView by lazy {
-        itemView.findViewById(R.id.valueView)
-    }
+    private val valueView = itemView.findViewById<TextView>(R.id.valueView)
 
-    private val barView: CapabilityBar by lazy {
-        itemView.findViewById(R.id.barView)
-    }
+    private val barView = itemView.findViewById<CapabilityBar>(R.id.barView)
 
     fun bind(info: KeyValueHolderInfo) {
         titleView.text = info.key
         valueView.text = info.value
-        if (info.showProgress) {
+        if (!info.showProgress) {
             barView.visibility = View.GONE
         } else {
             barView.visibility = View.VISIBLE
