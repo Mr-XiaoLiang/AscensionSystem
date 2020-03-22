@@ -48,9 +48,6 @@ class StartActivity : AppCompatActivity() {
         logoView.postDelayed({
             start()
         }, DELAY_START)
-
-
-
     }
 
     override fun onStop() {
