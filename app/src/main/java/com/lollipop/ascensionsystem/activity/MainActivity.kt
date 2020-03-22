@@ -27,12 +27,23 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         roleInfo.put(RoleInfo.Power, 2.4F)
         initAttributesList()
+        initModel()
     }
 
     private fun initAttributesList() {
         identityView.adapter = attributesAdapter
         identityView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         LinearSnapHelper().attachToRecyclerView(identityView)
+    }
+
+    private fun initModel() {
+        val modelId = if (roleInfo.get(RoleInfo.IsMale)) {
+            R.drawable.ic_man
+        } else {
+            R.drawable.ic_women
+        }
+        humanView.setImageResource(modelId)
+        miniHumanView.setImageResource(modelId)
     }
 
     override fun onStart() {
