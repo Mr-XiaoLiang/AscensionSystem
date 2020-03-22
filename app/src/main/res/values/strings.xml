@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">AscensionSystem</string>
-    
+    <string name="app_name">修仙系统</string>
+    <string name="welcome_message">欢迎使用 修仙辅助系统</string>
+
     <string name="gender">性别</string>
     <string name="power">修为</string>
     <string name="race">种族</string>
@@ -11,7 +12,19 @@
     <string name="buddha">佛</string>
     <string name="devil">魔</string>
     <string name="ghost">鬼</string>
-    
+
+    <string name="gold">金</string>
+    <string name="wood">木</string>
+    <string name="water">水</string>
+    <string name="fire">火</string>
+    <string name="earth">土</string>
+    <string name="signature">Lollipop</string>
+
+    <string name="title_synchronize_error">⚠️ 警告</string>
+    <string name="message_synchronize_error">系统无法连接到网络，无法进行信息的沟通，系统将暂停工作。\n请开启网络，系统每小时消耗的流量小于100Kib。\n如果这造成您的经济负担，请关闭修炼系统。</string>
+    <string name="btn_exit">退出系统</string>
+    <string name="btn_retry">重试</string>
+
     <string-array name="level_truth">
         <item>练气</item>
         <item>筑基</item>

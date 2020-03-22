@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.GuideActivity"
+    android:background="@color/windowBackground">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:id="@+id/manBtn"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/womanBtn"
+        android:layout_marginBottom="30dp"
+        app:cardBackgroundColor="@color/contentBackground">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_man"
+            android:scaleType="fitCenter"
+            android:padding="20dp"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:id="@+id/womanBtn"
+        app:layout_constraintLeft_toRightOf="@id/manBtn"
+        app:layout_constraintTop_toTopOf="@id/manBtn"
+        app:layout_constraintBottom_toBottomOf="@id/manBtn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintHeight_percent="0.3"
+        app:cardBackgroundColor="@color/contentBackground">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_women"
+            android:scaleType="fitCenter"
+            android:padding="20dp"/>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

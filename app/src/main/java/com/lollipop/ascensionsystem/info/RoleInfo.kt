@@ -12,11 +12,14 @@ import com.lollipop.ascensionsystem.util.range
 class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", context) {
 
     companion object {
+
+        val IsInit = BooleanRoleKey("isInit", false, 0, 0, 0)
+
         /**
          * 性别
          */
         @JvmStatic
-        val IsMale = BooleanRoleKey("isMale", false,
+        val IsMale = BooleanRoleKey("isMale", true,
             R.string.gender, R.string.male, R.string.female)
 
         /**
