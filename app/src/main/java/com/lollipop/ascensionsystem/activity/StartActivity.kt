@@ -56,11 +56,11 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun start() {
-        if (systemPreference.isInit) {
-            startActivity(Intent(this, MainActivity::class.java))
-        } else {
+//        if (systemPreference.isInit) {
+//            startActivity(Intent(this, MainActivity::class.java))
+//        } else {
             startActivity(Intent(this, GuideActivity::class.java))
-        }
+//        }
         finish()
     }
 

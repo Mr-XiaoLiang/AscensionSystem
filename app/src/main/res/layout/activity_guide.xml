@@ -7,14 +7,26 @@
     tools:context=".activity.GuideActivity"
     android:background="@color/windowBackground">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <TextView
+        android:id="@+id/guideList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0px"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/manBtn"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/attributesTitle"
+        android:text="@string/guide"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0px"
         android:layout_height="0px"
         android:id="@+id/manBtn"
+        android:visibility="invisible"
         app:layout_constraintHeight_percent="0.3"
         app:layout_constraintWidth_percent="0.4"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -36,6 +48,7 @@
         android:layout_width="0px"
         android:layout_height="0px"
         android:id="@+id/womanBtn"
+        android:visibility="invisible"
         app:layout_constraintLeft_toRightOf="@id/manBtn"
         app:layout_constraintTop_toTopOf="@id/manBtn"
         app:layout_constraintBottom_toBottomOf="@id/manBtn"
