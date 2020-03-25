@@ -1,17 +1,9 @@
 package com.lollipop.ascensionsystem.activity
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.lollipop.ascensionsystem.R
-import com.lollipop.ascensionsystem.util.banner.LBannerLayoutManager
-import com.lollipop.ascensionsystem.util.banner.Orientation
 import com.lollipop.ascensionsystem.util.lifecycleBinding
 import com.lollipop.ascensionsystem.util.onStart
 import kotlinx.android.synthetic.main.activity_guide.*
