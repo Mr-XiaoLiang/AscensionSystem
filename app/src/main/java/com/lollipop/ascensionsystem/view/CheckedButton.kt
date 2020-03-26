@@ -1,8 +1,7 @@
 package com.lollipop.ascensionsystem.view
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.ColorFilter
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.Checkable
@@ -40,7 +39,58 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
     }
 
     private class BorderDrawable: Drawable() {
+
+        private val paint = Paint().apply {
+            isAntiAlias = true
+            isDither = true
+        }
+
+        var color: Int
+            get() {
+                return paint.color
+            }
+            set(value) {
+                paint.color = color
+            }
+
+        var progress = 0F
+            set(value) {
+                field = value
+                updatePath()
+            }
+
+        var corner = 0F
+            set(value) {
+                field = value
+                updateBorder()
+            }
+
+        private val boundsF = RectF()
+        private val borderPath = Path()
+        private val drawingPath = Path()
+        private val pathMeasure = PathMeasure()
+
+        override fun onBoundsChange(bounds: Rect?) {
+            super.onBoundsChange(bounds)
+            updateBorder()
+        }
+
+        private fun updateBorder() {
+            boundsF.set(bounds)
+            borderPath.reset()
+            borderPath.addRoundRect(boundsF, corner, corner, Path.Direction.CW)
+            pathMeasure.setPath(borderPath, false)
+            updatePath()
+        }
+
+        private fun updatePath() {
+
+            invalidateSelf()
+        }
+
         override fun draw(canvas: Canvas) {
+            PathMeasure(borderPath, false)
+
             TODO("Not yet implemented")
         }
 
