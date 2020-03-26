@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.Checkable
 import androidx.cardview.widget.CardView
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * @author lollipop
@@ -55,7 +57,7 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
         var progress = 0F
             set(value) {
-                field = value
+                field = min(1F, max(0F, value))
                 updatePath()
             }
 
@@ -65,18 +67,35 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 updateBorder()
             }
 
+        var pathCount = 4
+            set(value) {
+                field = max(1, value)
+                updatePath()
+            }
+
+        var borderWidth = 2F
+            set(value) {
+                field = max(1F, value)
+                updateBorder()
+            }
+
         private val boundsF = RectF()
         private val borderPath = Path()
         private val drawingPath = Path()
         private val pathMeasure = PathMeasure()
 
-        override fun onBoundsChange(bounds: Rect?) {
-            super.onBoundsChange(bounds)
+        override fun onBoundsChange(b: Rect?) {
+            super.onBoundsChange(b)
+            val padding = borderWidth / 2
+            boundsF.set(bounds.left + padding, bounds.top + padding,
+                bounds.right - padding, bounds.bottom - padding)
             updateBorder()
         }
 
         private fun updateBorder() {
-            boundsF.set(bounds)
+            if (boundsF.isEmpty) {
+                return
+            }
             borderPath.reset()
             borderPath.addRoundRect(boundsF, corner, corner, Path.Direction.CW)
             pathMeasure.setPath(borderPath, false)
@@ -84,26 +103,32 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
         }
 
         private fun updatePath() {
-
+            drawingPath.reset()
+            val allLength = pathMeasure.length
+            val stepLength = allLength / pathCount
+            val progressLength = stepLength * progress
+            for (index in 0 until pathCount) {
+                val start = index * stepLength
+                pathMeasure.getSegment(start, start + progressLength, drawingPath, true)
+            }
             invalidateSelf()
         }
 
         override fun draw(canvas: Canvas) {
-            PathMeasure(borderPath, false)
-
-            TODO("Not yet implemented")
+            if (boundsF.isEmpty) {
+                return
+            }
+            canvas.drawPath(drawingPath, paint)
         }
 
         override fun setAlpha(alpha: Int) {
-            TODO("Not yet implemented")
+            paint.alpha = alpha
         }
 
-        override fun getOpacity(): Int {
-            TODO("Not yet implemented")
-        }
+        override fun getOpacity(): Int = PixelFormat.TRANSPARENT
 
         override fun setColorFilter(colorFilter: ColorFilter?) {
-            TODO("Not yet implemented")
+            paint.colorFilter = colorFilter
         }
 
     }
