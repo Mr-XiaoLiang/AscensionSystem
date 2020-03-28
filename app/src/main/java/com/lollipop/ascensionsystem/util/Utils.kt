@@ -1,5 +1,6 @@
 package com.lollipop.ascensionsystem.util
 
+import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -31,6 +32,11 @@ fun Int.range(min: Int, max: Int): Int {
         return max
     }
     return this
+}
+
+fun Int.alpha(weight: Float): Int {
+    val alpha = (Color.alpha(this) * weight).toInt().range(0, 255)
+    return this and 0xFFFFFF or (alpha shl 24)
 }
 
 val threadPool: Executor by lazy {

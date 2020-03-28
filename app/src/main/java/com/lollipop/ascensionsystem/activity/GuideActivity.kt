@@ -2,9 +2,10 @@ package com.lollipop.ascensionsystem.activity
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.lollipop.ascensionsystem.R
+import com.lollipop.ascensionsystem.util.FullLoadingHelper
 import com.lollipop.ascensionsystem.util.lifecycleBinding
 import com.lollipop.ascensionsystem.util.onStart
 import com.lollipop.ascensionsystem.view.CheckedButton
@@ -28,6 +29,11 @@ class GuideActivity : AppCompatActivity() {
     private fun initView() {
         showButton(manBtn)
         showButton(womanBtn)
+        nextBtn.hide()
+        nextBtn.postDelayed({
+            nextBtn.visibility = View.VISIBLE
+            nextBtn.show()
+        }, DURATION)
         CheckedButton.CheckedGroup()
             .bind(womanBtn)
             .checked(manBtn)
@@ -35,26 +41,33 @@ class GuideActivity : AppCompatActivity() {
             .borderWidth(5F)
             .onCheckedChange {
         }
+        nextBtn.setOnClickListener {
+            FullLoadingHelper.showIn(window.decorView as ViewGroup).show()
+        }
     }
 
     private fun showButton(button: View) {
-        button.translationY = button.height * 1F
-        button.alpha = 0F
-        button.animate().let {
-            it.cancel()
-            it.translationY(0F)
-            it.alpha(1F)
-            it.duration = DURATION
-            it.lifecycleBinding {
-                onStart { anim ->
-                    removeThis(anim)
-                    if (button.visibility != View.VISIBLE) {
-                        button.visibility = View.VISIBLE
+        button.post {
+            button.translationY = button.height * 1F
+            button.alpha = 0F
+            button.animate().let {
+                it.cancel()
+                it.translationY(0F)
+                it.alpha(1F)
+                it.duration = DURATION
+                it.lifecycleBinding {
+                    onStart { anim ->
+                        removeThis(anim)
+                        if (button.visibility != View.VISIBLE) {
+                            button.visibility = View.VISIBLE
+                        }
                     }
                 }
+                it.start()
             }
-            it.start()
         }
     }
+
+
 
 }
