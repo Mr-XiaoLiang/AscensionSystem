@@ -2,10 +2,12 @@ package com.lollipop.ascensionsystem.activity
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.util.lifecycleBinding
 import com.lollipop.ascensionsystem.util.onStart
+import com.lollipop.ascensionsystem.view.CheckedButton
 import kotlinx.android.synthetic.main.activity_guide.*
 
 /**
@@ -26,6 +28,13 @@ class GuideActivity : AppCompatActivity() {
     private fun initView() {
         showButton(manBtn)
         showButton(womanBtn)
+        CheckedButton.CheckedGroup()
+            .bind(womanBtn)
+            .checked(manBtn)
+            .borderColor(R.color.colorPrimary)
+            .borderWidth(5F)
+            .onCheckedChange {
+        }
     }
 
     private fun showButton(button: View) {

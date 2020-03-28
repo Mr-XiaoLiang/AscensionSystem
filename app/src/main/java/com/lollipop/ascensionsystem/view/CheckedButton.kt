@@ -1,11 +1,16 @@
 package com.lollipop.ascensionsystem.view
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.widget.Checkable
-import androidx.cardview.widget.CardView
+import android.util.TypedValue
+import android.view.View
+import android.view.animation.AccelerateInterpolator
+import androidx.core.content.ContextCompat
+import com.google.android.material.card.MaterialCardView
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -15,36 +20,97 @@ import kotlin.math.min
  * 可以选中的按钮
  */
 class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int):
-    CardView(context, attributeSet, defStyleAttr), Checkable {
+    MaterialCardView(context, attributeSet, defStyleAttr) {
+
+    private val borderDrawable = BorderDrawable(this)
 
     constructor(context: Context, attributeSet: AttributeSet?): this(context, attributeSet, 0)
     constructor(context: Context): this(context, null)
 
-    private var isChecked = false
+    companion object {
+        private const val ANIMATOR_DURATION = 800L
+    }
 
-    override fun isChecked(): Boolean {
-        return isChecked
+    private val animator: ValueAnimator by lazy {
+        ValueAnimator().apply {
+            addUpdateListener {
+                onAnimationProgressChange(it.animatedValue as Float)
+            }
+        }
+    }
+
+    private var animationProgress = 0F
+
+    init {
+        borderDrawable.corner = radius
+        isCheckable = true
+        checkedIcon = null
     }
 
     override fun toggle() {
-        isChecked = !isChecked
+        super.toggle()
         inStatusChange()
     }
 
     override fun setChecked(checked: Boolean) {
-        isChecked = checked
+        super.setChecked(checked)
         inStatusChange()
     }
 
-    private fun inStatusChange() {
-        // TODO
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
+        canvas?:return
+        borderDrawable.draw(canvas)
     }
 
-    private class BorderDrawable: Drawable() {
+    private fun inStatusChange() {
+        val endValue = if (isChecked) { 1F } else { 0F }
+        animator.cancel()
+        animator.setFloatValues(animationProgress, endValue)
+        animator.duration = (ANIMATOR_DURATION * abs(animationProgress - endValue)).toLong()
+        animator.interpolator = AccelerateInterpolator()
+        animator.start()
+    }
+
+    private fun onAnimationProgressChange(progress: Float) {
+        animationProgress = progress
+        borderDrawable.progress = animationProgress
+    }
+
+    fun borderColor(resId: Int) {
+        borderDrawable.color = ContextCompat.getColor(context, resId)
+    }
+
+    fun borderWidth(dp: Float) {
+        borderDrawable.borderWidth = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
+    }
+
+    override fun setRadius(radius: Float) {
+        super.setRadius(radius)
+        borderDrawable.corner = radius
+    }
+
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        borderDrawable.setBounds(0, 0, width, height)
+    }
+
+    override fun verifyDrawable(who: Drawable): Boolean {
+        return super.verifyDrawable(who) || borderDrawable == who
+    }
+
+    private class BorderDrawable(): Drawable() {
+
+        constructor(drawableCallback: Callback): this() {
+            super.setCallback(drawableCallback)
+        }
 
         private val paint = Paint().apply {
             isAntiAlias = true
             isDither = true
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
         }
 
         var color: Int
@@ -52,7 +118,7 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
                 return paint.color
             }
             set(value) {
-                paint.color = color
+                paint.color = value
             }
 
         var progress = 0F
@@ -75,7 +141,9 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
         var borderWidth = 2F
             set(value) {
-                field = max(1F, value)
+                val v = max(1F, value * 2)
+                field = v
+                paint.strokeWidth = v
                 updateBorder()
             }
 
@@ -86,9 +154,10 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
         override fun onBoundsChange(b: Rect?) {
             super.onBoundsChange(b)
-            val padding = borderWidth / 2
-            boundsF.set(bounds.left + padding, bounds.top + padding,
-                bounds.right - padding, bounds.bottom - padding)
+//            val padding = borderWidth / 2
+//            boundsF.set(bounds.left + padding, bounds.top + padding,
+//                bounds.right - padding, bounds.bottom - padding)
+            boundsF.set(bounds)
             updateBorder()
         }
 
@@ -129,6 +198,56 @@ class CheckedButton(context: Context, attributeSet: AttributeSet?, defStyleAttr:
 
         override fun setColorFilter(colorFilter: ColorFilter?) {
             paint.colorFilter = colorFilter
+        }
+
+    }
+
+    class CheckedGroup : OnClickListener {
+        private var checkedView: CheckedButton? = null
+
+        private var onCheckedChangeListener: ((CheckedButton) -> Unit)? = null
+
+        private val viewList = ArrayList<CheckedButton>()
+
+        fun bind(view: CheckedButton): CheckedGroup {
+            view.setOnClickListener(this)
+            viewList.add(view)
+            return this
+        }
+
+        override fun onClick(v: View?) {
+            if (v is CheckedButton) {
+                if (v != checkedView) {
+                    checkedView?.isChecked = false
+                    checkedView = v
+                    v.isChecked = true
+                    onCheckedChangeListener?.invoke(v)
+                }
+            }
+        }
+
+        fun checked(view: CheckedButton): CheckedGroup {
+            bind(view)
+            onClick(view)
+            return this
+        }
+
+        fun onCheckedChange(listener: (CheckedButton) -> Unit) {
+            onCheckedChangeListener = listener
+        }
+
+        fun borderColor(resId: Int): CheckedGroup {
+            viewList.forEach {
+                it.borderColor(resId)
+            }
+            return this
+        }
+
+        fun borderWidth(dp: Float): CheckedGroup {
+            viewList.forEach {
+                it.borderWidth(dp)
+            }
+            return this
         }
 
     }

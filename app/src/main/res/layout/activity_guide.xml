@@ -22,17 +22,29 @@
         android:textColor="@color/attributesTitle"
         android:text="@string/guide"/>
 
-    <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/manBtn"
+        app:layout_constraintLeft_toLeftOf="@id/manBtn"
+        app:layout_constraintRight_toRightOf="@id/womanBtn"
+        android:layout_marginBottom="20dp"
+        app:icon="@drawable/ic_arrow_forward_black_24dp"
+        android:backgroundTint="@color/fabBackground"
+        app:iconTint="@color/fabIcon"/>
+
+    <com.lollipop.ascensionsystem.view.CheckedButton
         android:layout_width="0px"
         android:layout_height="0px"
         android:id="@+id/manBtn"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintHeight_percent="0.3"
         app:layout_constraintWidth_percent="0.4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/womanBtn"
         android:layout_marginBottom="30dp"
+        app:cardCornerRadius="5dp"
         app:cardBackgroundColor="@color/contentBackground">
 
         <ImageView
@@ -42,19 +54,20 @@
             android:scaleType="fitCenter"
             android:padding="20dp"/>
 
-    </com.google.android.material.card.MaterialCardView>
+    </com.lollipop.ascensionsystem.view.CheckedButton>
 
-    <com.google.android.material.card.MaterialCardView
+    <com.lollipop.ascensionsystem.view.CheckedButton
         android:layout_width="0px"
         android:layout_height="0px"
         android:id="@+id/womanBtn"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@id/manBtn"
         app:layout_constraintTop_toTopOf="@id/manBtn"
         app:layout_constraintBottom_toBottomOf="@id/manBtn"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintWidth_percent="0.4"
         app:layout_constraintHeight_percent="0.3"
+        app:cardCornerRadius="5dp"
         app:cardBackgroundColor="@color/contentBackground">
         <ImageView
             android:layout_width="match_parent"
@@ -62,6 +75,6 @@
             android:src="@drawable/ic_women"
             android:scaleType="fitCenter"
             android:padding="20dp"/>
-    </com.google.android.material.card.MaterialCardView>
+    </com.lollipop.ascensionsystem.view.CheckedButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

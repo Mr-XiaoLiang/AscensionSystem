@@ -16,4 +16,7 @@
 
     <color name="colorPower">#2196F3</color>
 
+    <color name="fabBackground">#C17171</color>
+    <color name="fabIcon">#FFFFFF</color>
+
 </resources>
