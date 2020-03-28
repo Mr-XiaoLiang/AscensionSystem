@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.lollipop.ascensionsystem.R
+import com.lollipop.ascensionsystem.util.ContentLoadingHelper
+import com.lollipop.ascensionsystem.util.FullLoadingHelper
 import kotlinx.android.synthetic.main.activity_base.*
 
 /**
@@ -20,6 +23,13 @@ abstract class BaseActivity: AppCompatActivity() {
     abstract val layoutId: Int
 
     protected var isShowBack = true
+
+    private val contentLoadingHelper: ContentLoadingHelper by lazy {
+        ContentLoadingHelper.bind(contentLoadingView)
+    }
+    private val fullLoadingHelper: FullLoadingHelper by lazy {
+        FullLoadingHelper.showIn(window.decorView as ViewGroup)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +84,22 @@ abstract class BaseActivity: AppCompatActivity() {
 
     protected open fun onInsetsChange(left: Int, top: Int, right: Int, bottom: Int) {
         rootGroup.setPadding(left, top, right, bottom)
+    }
+
+    protected fun startLoading() {
+        contentLoadingHelper.show()
+    }
+
+    protected fun stopLoading() {
+        contentLoadingHelper.hide()
+    }
+
+    protected fun startFullLoading() {
+        fullLoadingHelper.show()
+    }
+
+    protected fun stopFullLoading() {
+        fullLoadingHelper.hide()
     }
 
 }

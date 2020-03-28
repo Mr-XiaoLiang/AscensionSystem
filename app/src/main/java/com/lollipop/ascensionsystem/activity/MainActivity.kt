@@ -83,12 +83,6 @@ class MainActivity : BaseActivity() {
 
         private val data = ArrayList<KeyValueHolderInfo>()
 
-        fun reset(d: List<KeyValueHolderInfo>) {
-            data.clear()
-            data.addAll(d)
-            notifyDataSetChanged()
-        }
-
         fun clear() {
             data.clear()
         }
