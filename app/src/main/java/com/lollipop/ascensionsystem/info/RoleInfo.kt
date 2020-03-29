@@ -40,6 +40,15 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         val Power = FloatRoleKey("Power", 0F, R.string.power, R.color.colorPower)
 
         /**
+         * 法力值
+         * 可以用于升级修为，可以用于战斗
+         */
+        @JvmStatic
+        val Mana = FloatRoleKey("Mana", 0F, R.string.mana, R.color.colorMana)
+
+
+
+        /**
          * 空
          */
         @JvmStatic
@@ -50,7 +59,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val Attributes = arrayOf(
-            IsMale, Race, Power
+            IsMale, Race, Power, Mana
         )
 
         /**

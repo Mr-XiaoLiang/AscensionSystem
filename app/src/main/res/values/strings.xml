@@ -134,5 +134,6 @@
     </string-array>
 
     <string name="guide">尽管不能改变自己的起点\n但是可以决定自己的终点\n尽管无法掌控生命的长度\n但是可以改变人生的宽度</string>
+    <string name="mana">法力</string>
 
 </resources>
