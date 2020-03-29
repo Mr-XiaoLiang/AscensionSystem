@@ -47,10 +47,18 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         val Mana = FloatRoleKey("Mana", 0F, R.string.mana, R.color.colorMana)
 
         /**
+         * 元神
          * 思考能力，为0时死亡，决定功法学习，挂机修炼
          */
         @JvmStatic
         val SoulEntity = FloatRoleKey("SoulEntity", 0F, R.string.soul_entity, R.color.colorSoulEntity)
+
+        /**
+         * 灵魂
+         *
+         */
+        @JvmStatic
+        val Soul = FloatRoleKey("Soul", 0F, R.string.soul, R.color.colorSoul)
 
         /**
          * 空

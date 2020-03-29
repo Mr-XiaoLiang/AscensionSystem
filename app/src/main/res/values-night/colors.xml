@@ -17,9 +17,11 @@
     <color name="colorPower">#165D95</color>
     <color name="colorMana">#AE3128</color>
     <color name="colorSoulEntity">#50369A</color>
+    <color name="colorSoul">#59701C</color>
 
     <color name="fabBackground">#7C4A4A</color>
     <color name="fabIcon">#AAA</color>
+
 
 
 </resources>
