@@ -19,5 +19,6 @@
 
     <color name="fabBackground">#C17171</color>
     <color name="fabIcon">#FFFFFF</color>
+    <color name="colorSoulEntity">#7B51F0</color>
 
 </resources>
