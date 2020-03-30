@@ -71,7 +71,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val Attributes = arrayOf(
-            IsMale, Race, Power, Mana, SoulEntity
+            IsMale, Race, Power, Mana, SoulEntity, Soul
         )
 
         /**
@@ -79,7 +79,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val allKeys = arrayOf(
-            IsMale, Race, Power, Empty
+            *Attributes, Empty
         )
     }
 
