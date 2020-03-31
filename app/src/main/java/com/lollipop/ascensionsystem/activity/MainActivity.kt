@@ -13,6 +13,9 @@ import com.lollipop.ascensionsystem.info.RoleInfo
 import com.lollipop.ascensionsystem.list.KeyValueHolder
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * 主页
+ */
 class MainActivity : BaseActivity() {
 
     override val layoutId: Int
