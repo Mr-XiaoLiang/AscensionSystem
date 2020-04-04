@@ -10,7 +10,6 @@ import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.util.range
 import kotlinx.android.synthetic.main.activity_practice.*
