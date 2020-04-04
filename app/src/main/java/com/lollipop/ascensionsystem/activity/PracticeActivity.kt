@@ -5,6 +5,8 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.View
+import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -65,6 +67,10 @@ class PracticeActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
         setContentView(R.layout.activity_practice)
 
         progressView.background = progressDrawable
@@ -77,9 +83,8 @@ class PracticeActivity: AppCompatActivity() {
         step = 1F * PROGRESS_UPDATE_DELAYED / allLength
 
         progressView.setOnClickListener {
-            BottomSheetDialog(this).apply {
-                setContentView(R.layout.activity_guide)
-            }.show()
+            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
         }
     }
 
