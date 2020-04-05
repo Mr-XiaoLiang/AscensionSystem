@@ -67,6 +67,8 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         @JvmStatic
         val Life = FloatRoleKey("Life", 0F, R.string.soul, R.color.colorLife)
 
+//        val Genus =
+
         /**
          * 空
          */
@@ -171,6 +173,10 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         override fun createValue(value: Int, context: Context): String {
             return context.getString(valueArray[value.range(0, valueArray.size)])
         }
+    }
+
+    class EnumRoleKey<T: Enum<*>>(key: String, defValue: Array<T>, name: Int) {
+
     }
 
 }

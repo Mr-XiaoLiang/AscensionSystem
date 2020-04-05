@@ -20,7 +20,11 @@ abstract class BaseInfo<T>(private val infoKey: String, private val context: Con
         }
 
     private val infoImpl = InfoImpl(
-        context.getSharedPreferences(infoKey, Context.MODE_PRIVATE)).apply { registered(spCallback) }
+        context.getSharedPreferences(infoKey, Context.MODE_PRIVATE), { value, def ->
+            customizeGetter(value, def)
+        }, { value ->
+            customizeSetter(value)
+        }).apply { registered(spCallback) }
 
     /**
      * 内容变更监听器
@@ -55,7 +59,20 @@ abstract class BaseInfo<T>(private val infoKey: String, private val context: Con
 
     protected abstract fun keyToKey(key: String): T
 
-    private class InfoImpl(private val preference: SharedPreferences) {
+    protected open fun customizeGetter(value: String, def: Any): GetterInfo? {
+        return null
+    }
+
+    protected open fun customizeSetter(value: Any): SetterInfo? {
+        return null
+    }
+
+    class GetterInfo(val value: Any)
+    class SetterInfo(val value: String)
+
+    private class InfoImpl(private val preference: SharedPreferences,
+                           private val customizeGetter: (value: String, def: Any) -> GetterInfo?,
+                           private val customizeSetter: (value: Any) -> SetterInfo?) {
 
         fun registered(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
             preference.registerOnSharedPreferenceChangeListener(listener)
@@ -86,7 +103,12 @@ abstract class BaseInfo<T>(private val infoKey: String, private val context: Con
                 is Set<*> -> {
                     preference.getStringSet(key, def as Set<String>)
                 }
-                else -> def
+                else -> {
+                    // 尝试使用自定义解析器
+                    customizeGetter.invoke(
+                        preference.getString(key, "")?:"",
+                        def as Any)?.value?:def
+                }
             }?:def
             return value as T
         }
@@ -114,7 +136,7 @@ abstract class BaseInfo<T>(private val infoKey: String, private val context: Con
                 }
                 is Set<*> -> {
                     if (value.isEmpty()) {
-                        edit.putStringSet(key, ArraySet<String>())
+                        edit.putStringSet(key, ArraySet())
                     } else {
                         val set = ArraySet<String>()
                         for (v in value) {
@@ -133,7 +155,8 @@ abstract class BaseInfo<T>(private val infoKey: String, private val context: Con
                     }
                 }
                 else -> {
-                    edit.putString(key, value.toString())
+                    edit.putString(key,
+                        customizeSetter.invoke(value)?.value?:value.toString())
                 }
             }
             edit.apply()
