@@ -61,6 +61,13 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         val Soul = FloatRoleKey("Soul", 0F, R.string.soul, R.color.colorSoul)
 
         /**
+         * 寿命
+         * 生命的长度
+         */
+        @JvmStatic
+        val Life = FloatRoleKey("Life", 0F, R.string.soul, R.color.colorLife)
+
+        /**
          * 空
          */
         @JvmStatic
@@ -71,7 +78,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val Attributes = arrayOf(
-            IsMale, Race, Power, Mana, SoulEntity, Soul
+            IsMale, Race, Power, Mana, SoulEntity, Soul, Life
         )
 
         /**

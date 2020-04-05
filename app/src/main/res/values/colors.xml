@@ -21,5 +21,6 @@
     <color name="fabIcon">#FFFFFF</color>
     <color name="colorSoulEntity">#7B51F0</color>
     <color name="colorSoul">#9AC22E</color>
+    <color name="colorLife">#24A357</color>
 
 </resources>
