@@ -108,7 +108,15 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         return Empty
     }
 
-    abstract class RoleKey<T> (val key: String, val defValue: T, val name: Int, val depend: RoleKey<*>? = null) {
+    abstract class RoleKey<T> (val key: String, val defValue: T, val name: Int) {
+
+        var depend: RoleKey<*>? = null
+            private set
+
+        fun dependOn(target: RoleKey<*>): RoleKey<T> {
+            depend = target
+            return this
+        }
 
         fun getValue(context: Context, info: RoleInfo): String {
             return createValue(info.get(this), context).let {
