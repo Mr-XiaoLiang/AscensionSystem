@@ -137,7 +137,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
 
     }
 
-    class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int):
+    open class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int):
         RoleKey<Float>(key, defValue, name) {
 
         override fun createValue(value: Float, context: Context): String {
@@ -145,6 +145,16 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         }
 
     }
+
+//    class ProgressRoleKey(key: String, defValue: Float, name: Int, barColor: Int,
+//                          private val valueKey: FloatRoleKey):
+//        FloatRoleKey(key, defValue, name, barColor) {
+//
+//        override fun createValue(value: Float, context: Context): String {
+//            return valueKey.getValue(context, )
+//        }
+//
+//    }
 
     open class IntRoleKey(key: String, defValue: Int, name: Int):
         RoleKey<Int>(key, defValue, name) {
