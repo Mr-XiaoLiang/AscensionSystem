@@ -137,5 +137,7 @@
     <string name="mana">法力</string>
     <string name="soul_entity">元神</string>
     <string name="soul">灵魂</string>
+    <string name="life">寿命</string>
+    <string name="fiveElements">灵根</string>
 
 </resources>

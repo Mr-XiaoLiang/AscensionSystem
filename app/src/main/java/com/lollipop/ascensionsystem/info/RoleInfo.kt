@@ -1,6 +1,7 @@
 package com.lollipop.ascensionsystem.info
 
 import android.content.Context
+import android.text.TextUtils
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.util.range
 
@@ -45,6 +46,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val Mana = FloatRoleKey("Mana", 0F, R.string.mana, R.color.colorMana)
+            .dependOn(FloatRoleKey("AllMana", 100F, R.string.mana, 0))
 
         /**
          * 元神
@@ -52,6 +54,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val SoulEntity = FloatRoleKey("SoulEntity", 0F, R.string.soul_entity, R.color.colorSoulEntity)
+            .dependOn(FloatRoleKey("AllSoulEntity", 100F, R.string.soul_entity, 0))
 
         /**
          * 灵魂
@@ -59,15 +62,25 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val Soul = FloatRoleKey("Soul", 0F, R.string.soul, R.color.colorSoul)
+            .dependOn(FloatRoleKey("AllSoul", 100F, R.string.soul, 0))
 
         /**
          * 寿命
          * 生命的长度
          */
         @JvmStatic
-        val Life = FloatRoleKey("Life", 0F, R.string.soul, R.color.colorLife)
+        val Life = FloatRoleKey("Life", 0F, R.string.life, R.color.colorLife)
+            .dependOn(FloatRoleKey("AllLife", 100F, R.string.life, 0))
 
-//        val Genus =
+        /**
+         * 灵根
+         * 五行属性
+         */
+        @JvmStatic
+        val FiveElements = EnumRoleKey("FiveElements", arrayOf(
+            FiveElementsInfo.Earth, FiveElementsInfo.Fire,
+            FiveElementsInfo.Gold, FiveElementsInfo.Water, FiveElementsInfo.Wood
+        ), R.string.fiveElements) { info, context -> context.getString(info.value) }
 
         /**
          * 空
@@ -80,7 +93,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          */
         @JvmStatic
         val Attributes = arrayOf(
-            IsMale, Race, Power, Mana, SoulEntity, Soul, Life
+            IsMale, Race, Power, Mana, SoulEntity, Soul, Life, FiveElements
         )
 
         /**
@@ -175,8 +188,82 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         }
     }
 
-    class EnumRoleKey<T: Enum<*>>(key: String, defValue: Array<T>, name: Int) {
+    class EnumRoleKey<T: Enum<*>>(key: String, defValue: Array<T>, name: Int,
+                                  private val getName: (T, Context) -> String): RoleKey<Array<T>>(key, defValue, name) {
+        override fun createValue(value: Array<T>, context: Context): String {
+            if (value.isEmpty()) {
+                return ""
+            }
+            if (value.size == 1) {
+                return getName.invoke(value[0], context)
+            }
+            val builder = StringBuilder()
+            for (index in value.indices) {
+                if (index != 0) {
+                    builder.append(" ")
+                } else {
+                    builder.append(getName.invoke(value[index], context))
+                }
+            }
+            return builder.toString()
+        }
+    }
 
+    override fun customizeGetter(value: String, def: Any): GetterInfo? {
+        when (def) {
+            is Array<*> -> {
+                val valueArray = value.split(ARRAY_DELIMITER)
+                val defItem = def[0]?:return GetterInfo(def)
+                if (defItem is FiveElementsInfo) {
+                    return GetterInfo(fiveElementParse(valueArray))
+                }
+            }
+        }
+        return super.customizeGetter(value, def)
+    }
+
+    override fun customizeSetter(value: Any): SetterInfo? {
+        when (value) {
+            is Array<*> -> {
+                if (value.isEmpty()) {
+                    return SetterInfo("");
+                }
+                val fastValue = value[0]
+                if (fastValue is FiveElementsInfo) {
+                    return SetterInfo(fiveElementSerialization(value as Array<FiveElementsInfo>))
+                }
+            }
+        }
+        return super.customizeSetter(value)
+    }
+
+    private fun fiveElementParse(valueArray: List<String>): Array<FiveElementsInfo> {
+        val result = ArrayList<FiveElementsInfo>()
+        for (value in valueArray) {
+            if (TextUtils.isEmpty(value)) {
+                continue
+            }
+            result.add(FiveElementsInfo.valueOf(value))
+        }
+        return Array(result.size) { result[it] }
+    }
+
+    private fun fiveElementSerialization(valueArray: Array<FiveElementsInfo>): String {
+        if (valueArray.isEmpty()) {
+            return ""
+        }
+        if (valueArray.size == 1) {
+            return valueArray[0].name
+        }
+        val builder = StringBuilder()
+        for (index in valueArray.indices) {
+            if (index != 0) {
+                builder.append(ARRAY_DELIMITER)
+            }
+            builder.append(valueArray[index].name)
+
+        }
+        return builder.toString()
     }
 
 }

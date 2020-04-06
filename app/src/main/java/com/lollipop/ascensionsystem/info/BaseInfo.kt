@@ -11,6 +11,10 @@ import androidx.collection.ArraySet
  */
 abstract class BaseInfo<T>(private val infoKey: String, private val context: Context){
 
+    companion object {
+        const val ARRAY_DELIMITER = ":L:"
+    }
+
     private val spCallback = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (key != null) {
                 observerList.forEach {
