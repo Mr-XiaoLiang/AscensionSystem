@@ -61,7 +61,6 @@ class StartActivity : AppCompatActivity() {
 //        } else {
 //            startActivity(Intent(this, GuideActivity::class.java))
 //        }
-        // update nothing 20200409
         finish()
     }
 
