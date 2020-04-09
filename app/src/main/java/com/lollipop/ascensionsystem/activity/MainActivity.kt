@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 主页
+ * @author Lollipop
  */
 class MainActivity : BaseActivity() {
 
