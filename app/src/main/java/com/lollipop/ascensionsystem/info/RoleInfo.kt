@@ -13,6 +13,10 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
 
     companion object {
 
+        /**
+         * 是否已经初始化
+         */
+        @JvmStatic
         val IsInit = BooleanRoleKey("isInit", false, 0, 0, 0)
 
         /**
@@ -28,14 +32,12 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
          * 种族
          */
         @JvmStatic
-        val Race = ArrayValueRoleKey(
-            "Race", 0, R.string.race, intArrayOf(
+        val Race = ArrayValueRoleKey("Race", 0, R.string.race, intArrayOf(
                 RoadInfo.Truth.value,
                 RoadInfo.Buddha.value,
                 RoadInfo.Devil.value,
                 RoadInfo.Ghost.value
-            )
-        )
+            ))
 
         /**
          * 修为
@@ -121,8 +123,8 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
         return key.decode(super.get(key.key, key.encode(key.defValue as Any)))
     }
 
-    fun <T> put(key: RoleKey<T>, value: Any) {
-        super.put(key.key, key.encode(value))
+    fun <T> put(key: RoleKey<T>, value: T) {
+        super.put(key.key, key.encode(value as Any))
     }
 
     override fun keyToKey(key: String): RoleKey<*> {
