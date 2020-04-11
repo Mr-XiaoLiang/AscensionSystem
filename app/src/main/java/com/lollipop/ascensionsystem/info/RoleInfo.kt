@@ -4,13 +4,14 @@ import android.content.Context
 import android.text.TextUtils
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.util.range
+import java.lang.Exception
 
 /**
  * @author lollipop
  * @date 2020/3/21 15:44
  * 角色信息
  */
-class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", context) {
+class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", context) {
 
     companion object {
 
@@ -20,19 +21,23 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          * 性别
          */
         @JvmStatic
-        val IsMale = BooleanRoleKey("isMale", true,
-            R.string.gender, R.string.male, R.string.female)
+        val IsMale = BooleanRoleKey(
+            "isMale", true,
+            R.string.gender, R.string.male, R.string.female
+        )
 
         /**
          * 种族
          */
         @JvmStatic
-        val Race = ArrayValueRoleKey("Race", 0, R.string.race, intArrayOf(
-            RoadInfo.Truth.value,
-            RoadInfo.Buddha.value,
-            RoadInfo.Devil.value,
-            RoadInfo.Ghost.value
-        ))
+        val Race = ArrayValueRoleKey(
+            "Race", 0, R.string.race, intArrayOf(
+                RoadInfo.Truth.value,
+                RoadInfo.Buddha.value,
+                RoadInfo.Devil.value,
+                RoadInfo.Ghost.value
+            )
+        )
 
         /**
          * 修为
@@ -53,8 +58,9 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          * 思考能力，为0时死亡，决定功法学习，挂机修炼
          */
         @JvmStatic
-        val SoulEntity = FloatRoleKey("SoulEntity", 0F, R.string.soul_entity, R.color.colorSoulEntity)
-            .dependOn(FloatRoleKey("AllSoulEntity", 100F, R.string.soul_entity, 0))
+        val SoulEntity =
+            FloatRoleKey("SoulEntity", 0F, R.string.soul_entity, R.color.colorSoulEntity)
+                .dependOn(FloatRoleKey("AllSoulEntity", 100F, R.string.soul_entity, 0))
 
         /**
          * 灵魂
@@ -77,10 +83,18 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
          * 五行属性
          */
         @JvmStatic
-        val FiveElements = EnumRoleKey("FiveElements", arrayOf(
-            FiveElementsInfo.Earth, FiveElementsInfo.Fire,
-            FiveElementsInfo.Gold, FiveElementsInfo.Water, FiveElementsInfo.Wood
-        ), R.string.fiveElements) { info, context -> context.getString(info.value) }
+        val FiveElements = EnumRoleKey(
+            "FiveElements", arrayOf(
+                FiveElementsInfo.Earth, FiveElementsInfo.Fire,
+                FiveElementsInfo.Gold, FiveElementsInfo.Water, FiveElementsInfo.Wood
+            ), R.string.fiveElements, { info, context -> context.getString(info.value) },
+            {
+                try {
+                    FiveElementsInfo.valueOf(it)
+                } catch (e: Exception) {
+                    FiveElementsInfo.Earth
+                }
+            })
 
         /**
          * 空
@@ -106,13 +120,12 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
     }
 
     fun <T> get(key: RoleKey<T>): T {
-        return super.get(key.key, key.defValue)
+        return key.decode(super.get(key.key, key.encode(key.defValue as Any)))
     }
 
     fun <T> put(key: RoleKey<T>, value: Any) {
-        super.put(key.key, value)
+        super.put(key.key, key.encode(value))
     }
-
 
     override fun keyToKey(key: String): RoleKey<*> {
         for (roleKey in allKeys) {
@@ -123,7 +136,8 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
         return Empty
     }
 
-    abstract class RoleKey<T> (val key: String, val defValue: T, val name: Int) {
+    @Suppress("UNCHECKED_CAST")
+    abstract class RoleKey<T>(val key: String, val defValue: T, val name: Int) {
 
         var depend: RoleKey<*>? = null
             private set
@@ -135,25 +149,45 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
 
         fun getValue(context: Context, info: RoleInfo): String {
             return createValue(info.get(this), context).let {
-                if (depend != null) { "$it(${depend.getValue(context, info)})" } else { it }
+                if (depend != null) {
+                    "$it(${depend?.getValue(context, info) ?: ""})"
+                } else {
+                    it
+                }
             }
+        }
+
+        open fun encode(value: Any): Any {
+            return value
+        }
+
+        open fun decode(value: Any): T {
+            return value as T
         }
 
         abstract fun createValue(value: T, context: Context): String
 
     }
 
-    class BooleanRoleKey(key: String, defValue: Boolean, name: Int,
-                         private val ofTrue: Int, private val ofFalse: Int):
+    class BooleanRoleKey(
+        key: String, defValue: Boolean, name: Int,
+        private val ofTrue: Int, private val ofFalse: Int
+    ) :
         RoleKey<Boolean>(key, defValue, name) {
 
         override fun createValue(value: Boolean, context: Context): String {
-            return context.getString(if (value) { ofTrue } else { ofFalse } )
+            return context.getString(
+                if (value) {
+                    ofTrue
+                } else {
+                    ofFalse
+                }
+            )
         }
 
     }
 
-    class StringRoleKey(key: String, defValue: String, name: Int):
+    class StringRoleKey(key: String, defValue: String, name: Int) :
         RoleKey<String>(key, defValue, name) {
 
         override fun createValue(value: String, context: Context): String {
@@ -162,7 +196,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
 
     }
 
-    class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int):
+    class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int) :
         RoleKey<Float>(key, defValue, name) {
 
         override fun createValue(value: Float, context: Context): String {
@@ -171,7 +205,7 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
 
     }
 
-    open class IntRoleKey(key: String, defValue: Int, name: Int):
+    open class IntRoleKey(key: String, defValue: Int, name: Int) :
         RoleKey<Int>(key, defValue, name) {
 
         override fun createValue(value: Int, context: Context): String {
@@ -180,16 +214,22 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
 
     }
 
-    class ArrayValueRoleKey(key: String, defValue: Int, name: Int,
-                            private val valueArray: IntArray):
+    class ArrayValueRoleKey(
+        key: String, defValue: Int, name: Int,
+        private val valueArray: IntArray
+    ) :
         IntRoleKey(key, defValue, name) {
         override fun createValue(value: Int, context: Context): String {
             return context.getString(valueArray[value.range(0, valueArray.size)])
         }
     }
 
-    class EnumRoleKey<T: Enum<*>>(key: String, defValue: Array<T>, name: Int,
-                                  private val getName: (T, Context) -> String): RoleKey<Array<T>>(key, defValue, name) {
+    @Suppress("UNCHECKED_CAST")
+    class EnumRoleKey<T : Enum<*>>(
+        key: String, defValue: Array<T>, name: Int,
+        private val getName: (T, Context) -> String,
+        private val parse: (String) -> T
+    ) : RoleKey<Array<T>>(key, defValue, name) {
         override fun createValue(value: Array<T>, context: Context): String {
             if (value.isEmpty()) {
                 return ""
@@ -201,69 +241,46 @@ class RoleInfo(context: Context): BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", cont
             for (index in value.indices) {
                 if (index != 0) {
                     builder.append(" ")
-                } else {
-                    builder.append(getName.invoke(value[index], context))
                 }
+                builder.append(getName.invoke(value[index], context))
             }
             return builder.toString()
         }
-    }
 
-    override fun customizeGetter(value: String, def: Any): GetterInfo? {
-        when (def) {
-            is Array<*> -> {
-                val valueArray = value.split(ARRAY_DELIMITER)
-                val defItem = def[0]?:return GetterInfo(def)
-                if (defItem is FiveElementsInfo) {
-                    return GetterInfo(fiveElementParse(valueArray))
+        override fun encode(value: Any): Any {
+            if (value is Array<*>) {
+                val builder = StringBuilder()
+                for (i in value.indices) {
+                    if (i > 0) {
+                        builder.append(",")
+                    }
+                    val v = value[i]
+                    if (v is Enum<*>) {
+                        builder.append(v.name)
+                    } else {
+                        builder.append(v.toString())
+                    }
                 }
+                return builder.toString()
             }
+            return super.encode(value)
         }
-        return super.customizeGetter(value, def)
-    }
 
-    override fun customizeSetter(value: Any): SetterInfo? {
-        when (value) {
-            is Array<*> -> {
-                if (value.isEmpty()) {
-                    return SetterInfo("");
+        override fun decode(value: Any): Array<T> {
+            if (value is String) {
+                val list = ArrayList<T>()
+                val valueArray = value.split(",")
+                for (v in valueArray) {
+                    val enum = parse.invoke(v)
+                    if (!list.contains(enum)) {
+                        list.add(enum)
+                    }
                 }
-                val fastValue = value[0]
-                if (fastValue is FiveElementsInfo) {
-                    return SetterInfo(fiveElementSerialization(value as Array<FiveElementsInfo>))
-                }
+                return Array<Enum<*>>(list.size) { list[it] } as Array<T>
             }
+            return super.decode(value)
         }
-        return super.customizeSetter(value)
-    }
 
-    private fun fiveElementParse(valueArray: List<String>): Array<FiveElementsInfo> {
-        val result = ArrayList<FiveElementsInfo>()
-        for (value in valueArray) {
-            if (TextUtils.isEmpty(value)) {
-                continue
-            }
-            result.add(FiveElementsInfo.valueOf(value))
-        }
-        return Array(result.size) { result[it] }
-    }
-
-    private fun fiveElementSerialization(valueArray: Array<FiveElementsInfo>): String {
-        if (valueArray.isEmpty()) {
-            return ""
-        }
-        if (valueArray.size == 1) {
-            return valueArray[0].name
-        }
-        val builder = StringBuilder()
-        for (index in valueArray.indices) {
-            if (index != 0) {
-                builder.append(ARRAY_DELIMITER)
-            }
-            builder.append(valueArray[index].name)
-
-        }
-        return builder.toString()
     }
 
 }
