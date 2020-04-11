@@ -1,10 +1,8 @@
 package com.lollipop.ascensionsystem.info
 
 import android.content.Context
-import android.text.TextUtils
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.util.range
-import java.lang.Exception
 
 /**
  * @author lollipop
@@ -43,7 +41,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
          * 修为
          */
         @JvmStatic
-        val Power = FloatRoleKey("Power", 0F, R.string.power, R.color.colorPower)
+        val Power = PowerRoleKey()
 
         /**
          * 法力值
@@ -147,7 +145,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
             return this
         }
 
-        fun getValue(context: Context, info: RoleInfo): String {
+        open fun getValue(context: Context, info: RoleInfo): String {
             return createValue(info.get(this), context).let {
                 if (depend != null) {
                     "$it(${depend?.getValue(context, info) ?: ""})"
@@ -196,11 +194,20 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
 
     }
 
-    class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int) :
+    open class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int) :
         RoleKey<Float>(key, defValue, name) {
 
         override fun createValue(value: Float, context: Context): String {
             return value.toString()
+        }
+
+    }
+
+    class PowerRoleKey: FloatRoleKey("Power", 0F, R.string.power, R.color.colorPower) {
+
+        override fun getValue(context: Context, info: RoleInfo): String {
+            val power = info.get(this)
+            return InfoName.powerName(context, power, info.get(Race))
         }
 
     }

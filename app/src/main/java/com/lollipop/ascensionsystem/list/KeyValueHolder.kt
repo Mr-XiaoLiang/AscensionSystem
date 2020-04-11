@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.info.KeyValueHolderInfo
+import com.lollipop.ascensionsystem.util.range
 import com.lollipop.ascensionsystem.view.CapabilityBar
 
 /**
@@ -44,7 +45,8 @@ class KeyValueHolder private constructor(view: View, private val onClick: (KeyVa
             barView.visibility = View.GONE
         } else {
             barView.visibility = View.VISIBLE
-            barView.progress(info.progress)
+            val progress = (info.progress - info.progress.toInt()).range(0F, 1F)
+            barView.progress(progress)
             barView.colorFromRes(info.barColor)
         }
     }
