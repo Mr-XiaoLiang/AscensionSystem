@@ -146,5 +146,9 @@
     <string name="soul">灵魂</string>
     <string name="life">寿命</string>
     <string name="fiveElements">灵根</string>
+    <string name="muscle">力量</string>
+    <string name="speed">速度</string>
+    <string name="perception">感知</string>
+    <string name="talent">天赋</string>
 
 </resources>

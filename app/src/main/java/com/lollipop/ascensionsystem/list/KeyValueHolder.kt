@@ -41,7 +41,7 @@ class KeyValueHolder private constructor(view: View, private val onClick: (KeyVa
     fun bind(info: KeyValueHolderInfo) {
         titleView.text = info.key
         valueView.text = info.value
-        if (!info.showProgress) {
+        if (!info.showProgress || info.barColor == 0) {
             barView.visibility = View.GONE
         } else {
             barView.visibility = View.VISIBLE

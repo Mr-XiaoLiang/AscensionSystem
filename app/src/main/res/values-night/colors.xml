@@ -22,6 +22,10 @@
     <color name="colorSoulEntity">#50369A</color>
     <color name="colorSoul">#59701C</color>
     <color name="colorLife">#1A713D</color>
+    <color name="colorMuscle">#204A88</color>
+    <color name="colorSpeed">#AA4D28</color>
+    <color name="colorPerception">#279F6F</color>
+    <color name="colorTalent">#7A409E</color>
 
 
 </resources>

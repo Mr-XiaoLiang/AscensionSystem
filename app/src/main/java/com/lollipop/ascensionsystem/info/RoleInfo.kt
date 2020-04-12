@@ -112,6 +112,38 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
             })
 
         /**
+         * 力量
+         * 肉体的力量基础
+         * 决定武器，攻击力
+         */
+        @JvmStatic
+        val Muscle = FloatRoleKey("Muscle", 10F, R.string.muscle, 0)
+
+        /**
+         * 速度
+         * 攻击速度，移动速度
+         */
+        @JvmStatic
+        val Speed = FloatRoleKey("Speed", 10F, R.string.speed, 0)
+
+        /**
+         * 感知
+         * 神识，识别敌方属性距离
+         * 本质上是以神识为基础叠加自身的倍数
+         */
+        @JvmStatic
+        val Perception = FloatRoleKey("Perception", 10F, R.string.perception, 0)
+
+        /**
+         * 天赋
+         * 决定悟性，提升功法创建成功率
+         */
+        @JvmStatic
+        val Talent = FloatRoleKey("Talent", 10F, R.string.talent, 0)
+
+//        val MajorPractice =
+
+        /**
          * 空
          */
         @JvmStatic
@@ -122,7 +154,8 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
          */
         @JvmStatic
         val Attributes = arrayOf(
-            IsMale, Race, Power, Mana, SoulEntity, Soul, Life, FiveElements, Lucky
+            IsMale, Race, Power, Mana, SoulEntity, Soul, Life, FiveElements, Lucky,
+            Muscle, Speed, Perception, Talent
         )
 
         /**
