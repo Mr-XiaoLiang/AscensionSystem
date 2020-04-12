@@ -7,6 +7,7 @@
     <string name="race">种族</string>
     <string name="male">雄性</string>
     <string name="female">雌性</string>
+    <string name="lucky">幸运</string>
 
     <string name="truth">仙</string>
     <string name="buddha">佛</string>
@@ -19,6 +20,12 @@
     <string name="fire">火</string>
     <string name="earth">土</string>
     <string name="signature">Lollipop</string>
+
+    <string name="lucky_a">甲</string>
+    <string name="lucky_b">乙</string>
+    <string name="lucky_c">丙</string>
+    <string name="lucky_d">丁</string>
+    <string name="lucky_e">戊</string>
 
     <string name="title_synchronize_error">⚠️ 警告</string>
     <string name="message_synchronize_error">系统无法连接到网络，无法进行信息的沟通，系统将暂停工作。\n请开启网络，系统每小时消耗的流量小于100Kib。\n如果这造成您的经济负担，请关闭修炼系统。</string>

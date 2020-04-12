@@ -83,7 +83,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
          * 五行属性
          */
         @JvmStatic
-        val FiveElements = EnumRoleKey(
+        val FiveElements = EnumArrayRoleKey(
             "FiveElements", arrayOf(
                 FiveElementsInfo.Earth, FiveElementsInfo.Fire,
                 FiveElementsInfo.Gold, FiveElementsInfo.Water, FiveElementsInfo.Wood
@@ -93,6 +93,21 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
                     FiveElementsInfo.valueOf(it)
                 } catch (e: Exception) {
                     FiveElementsInfo.Earth
+                }
+            })
+
+        /**
+         * 幸运
+         * 甲>乙>丙>丁>戊
+         */
+        @JvmStatic
+        val Lucky = EnumRoleKey("Lucky", LuckyLevel.C, R.string.lucky,
+            {info, context -> context.getString(info.value)},
+            {
+                try {
+                    LuckyLevel.valueOf(it)
+                } catch (e: Exception) {
+                    LuckyLevel.C
                 }
             })
 
@@ -107,7 +122,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
          */
         @JvmStatic
         val Attributes = arrayOf(
-            IsMale, Race, Power, Mana, SoulEntity, Soul, Life, FiveElements
+            IsMale, Race, Power, Mana, SoulEntity, Soul, Life, FiveElements, Lucky
         )
 
         /**
@@ -234,7 +249,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
     }
 
     @Suppress("UNCHECKED_CAST")
-    class EnumRoleKey<T : Enum<*>>(
+    class EnumArrayRoleKey<T : Enum<*>>(
         key: String, defValue: Array<T>, name: Int,
         private val getName: (T, Context) -> String,
         private val parse: (String) -> T
@@ -286,6 +301,31 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
                     }
                 }
                 return Array<Enum<*>>(list.size) { list[it] } as Array<T>
+            }
+            return super.decode(value)
+        }
+
+    }
+
+    class EnumRoleKey<T : Enum<*>>(
+        key: String, defValue: T, name: Int,
+        private val getName: (T, Context) -> String,
+        private val parse: (String) -> T) : RoleKey<T>(key, defValue, name) {
+
+        override fun createValue(value: T, context: Context): String {
+            return getName.invoke(value, context)
+        }
+
+        override fun encode(value: Any): Any {
+            if (value is Enum<*>) {
+                return value.name
+            }
+            return super.encode(value)
+        }
+
+        override fun decode(value: Any): T {
+            if (value is String) {
+                return parse.invoke(value)
             }
             return super.decode(value)
         }
