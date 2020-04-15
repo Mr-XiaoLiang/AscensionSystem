@@ -2,16 +2,11 @@ package com.lollipop.ascensionsystem.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
+import androidx.appcompat.app.AppCompatActivity
 import com.lollipop.ascensionsystem.R
 import com.lollipop.ascensionsystem.info.SystemPreference
-import com.lollipop.ascensionsystem.util.ComputingCore
-import com.lollipop.ascensionsystem.util.lifecycleBinding
-import com.lollipop.ascensionsystem.util.log
-import com.lollipop.ascensionsystem.util.onEnd
 import kotlinx.android.synthetic.main.activity_start.*
 
 /**
