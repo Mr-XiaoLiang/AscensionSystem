@@ -6,6 +6,7 @@ import android.os.Build
 import com.lollipop.ascensionsystem.info.RoleInfo
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.util.*
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
 
@@ -74,7 +75,7 @@ object ComputingCore {
     }
 
     private fun String.token(): String {
-        return this.fixLength(TOKEN_LENGTH)
+        return this.clear().fixLength(TOKEN_LENGTH)
     }
 
     private fun String.fixLength(l: Int): String {
@@ -126,6 +127,10 @@ object ComputingCore {
         outputStream.flush()
         outputStream.close()
         return String(outputStream.toByteArray(), Charsets.UTF_8)
+    }
+
+    private fun String.clear() : String {
+        return (this as java.lang.String).replaceAll("[^a-zA-Z0-9]","").toLowerCase(Locale.US)
     }
 
     /**
