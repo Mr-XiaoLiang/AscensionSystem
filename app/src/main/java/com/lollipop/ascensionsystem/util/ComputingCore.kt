@@ -6,7 +6,7 @@ import android.os.Build
 import com.lollipop.ascensionsystem.info.RoleInfo
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.util.*
+import java.util.regex.Pattern
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
 
@@ -23,9 +23,12 @@ object ComputingCore {
 
     /**
      * 计算资质的token凭证
+     * 获得一个64位长度的字符串
+     * 并且每4位表示一个设备参数值，表示一项指标
      */
     fun qualificationToken(context: Context): String {
         val tokenBuilder = StringBuilder()
+
         // 版本号
         tokenBuilder.append(Build.VERSION.SDK_INT.token())
         // 屏幕宽度
@@ -130,7 +133,7 @@ object ComputingCore {
     }
 
     private fun String.clear() : String {
-        return (this as java.lang.String).replaceAll("[^a-zA-Z0-9]","").toLowerCase(Locale.US)
+        return Pattern.compile("[^a-zA-Z0-9]").matcher(this).replaceAll("")
     }
 
     /**
