@@ -187,10 +187,10 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
     @Suppress("UNCHECKED_CAST")
     abstract class RoleKey<T>(val key: String, val defValue: T, val name: Int) {
 
-        var depend: RoleKey<*>? = null
+        var depend: RoleKey<T>? = null
             private set
 
-        fun dependOn(target: RoleKey<*>): RoleKey<T> {
+        fun dependOn(target: RoleKey<T>): RoleKey<T> {
             depend = target
             return this
         }

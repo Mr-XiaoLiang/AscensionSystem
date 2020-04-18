@@ -7,6 +7,7 @@ import com.lollipop.ascensionsystem.info.RoadInfo
 import com.lollipop.ascensionsystem.info.RoleInfo
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.util.*
 import java.util.regex.Pattern
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
@@ -30,7 +31,7 @@ object ComputingCore {
     fun qualificationToken(context: Context): String {
         val tokenBuilder = StringBuilder()
 
-        // 版本号
+        // 版本号(元神强度)
         tokenBuilder.append(Build.VERSION.SDK_INT.token())
         // 屏幕宽度
         tokenBuilder.append(context.resources.displayMetrics.widthPixels.token())
@@ -38,7 +39,7 @@ object ComputingCore {
         tokenBuilder.append(context.resources.displayMetrics.heightPixels.token())
         // 显示
         tokenBuilder.append(Build.DISPLAY.token())
-        // RAM
+        // RAM(灵魂强度)
         tokenBuilder.append(getRAM(context))
         // bootloader
         tokenBuilder.append(Build.BOOTLOADER.token())
@@ -140,14 +141,63 @@ object ComputingCore {
     /**
      * 初始化信息
      */
-    fun initRole(info: RoleInfo) {
+    fun initRole(context: Context, info: RoleInfo) {
         if (info.get(RoleInfo.IsInit)) {
             return
         }
+        val tokenValue = qualificationToken(context)
+        val random = Random()
+
         // 初始种族始终是修仙
         info.set(RoleInfo.Race, RoadInfo.Truth.value)
 
+        // 修为是0
+        info.set(RoleInfo.Power, 0F)
+
+        // 初始法力为0
+        info.set(RoleInfo.Mana, 0F)
+        // 最大值。默认为100
+        RoleInfo.Mana.depend?.let {
+            info.set(it, 100F)
+        }
+
+        // 元神值 80 ~ 120
+        val soulEntityValue = tokenValue.tokenKey(0)
+            .toInt(RADIX)
+            .attrValue(random, 80F, 120F)
+        info.set(RoleInfo.SoulEntity, soulEntityValue)
+        // 最大值就是初始值，默认满值
+        RoleInfo.SoulEntity.depend?.let { info.set(it, soulEntityValue) }
+
+        // 灵魂值
+        val soulValue = tokenValue.tokenKey(4)
+            .toInt(RADIX)
+            .attrValue(random, 60F, 120F)
+        info.set(RoleInfo.Soul, soulValue)
+        // 最大值就是初始值，默认满值
+        RoleInfo.Soul.depend?.let { info.set(it, soulValue) }
         // TODO
+    }
+
+    private fun String.tokenKey(index: Int): String {
+        if (this.isEmpty()) {
+            return this
+        }
+        val maxCount = this.length / TOKEN_LENGTH
+        val subIndex = index % maxCount
+        return this.substring(subIndex * TOKEN_LENGTH, (subIndex + 1) * TOKEN_LENGTH)
+    }
+
+    private fun Int.attrValue(random: Random, minValue: Float, maxValue: Float): Float {
+        val value = random.nextInt(this)
+        // 以取值范围的中心作为标准
+        val benchmark = this * 0.5F
+        // 取值范围的中心点
+        val benchmarkValue = maxValue - minValue
+        // 真实的浮动长度（正负相对于原点）
+        val floatingRange = benchmarkValue * 0.5F
+        // 低于标准则为负数，最终叠加到原点的值上
+        return ((benchmark - value) / benchmark * floatingRange) + benchmarkValue
     }
 
 }
