@@ -171,7 +171,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
         return key.decode(super.get(key.key, key.encode(key.defValue as Any)))
     }
 
-    fun <T> put(key: RoleKey<T>, value: T) {
+    fun <T> set(key: RoleKey<T>, value: T) {
         super.put(key.key, key.encode(value as Any))
     }
 

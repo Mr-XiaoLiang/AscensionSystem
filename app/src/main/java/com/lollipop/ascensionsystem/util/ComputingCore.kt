@@ -3,6 +3,7 @@ package com.lollipop.ascensionsystem.util
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
+import com.lollipop.ascensionsystem.info.RoadInfo
 import com.lollipop.ascensionsystem.info.RoleInfo
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -140,6 +141,12 @@ object ComputingCore {
      * 初始化信息
      */
     fun initRole(info: RoleInfo) {
+        if (info.get(RoleInfo.IsInit)) {
+            return
+        }
+        // 初始种族始终是修仙
+        info.set(RoleInfo.Race, RoadInfo.Truth.value)
+
         // TODO
     }
 

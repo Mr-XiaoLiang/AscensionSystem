@@ -28,7 +28,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        roleInfo.put(RoleInfo.Power, 2.4F)
+        roleInfo.set(RoleInfo.Power, 2.4F)
         initAttributesList()
         initModel()
     }
