@@ -3,6 +3,7 @@ package com.lollipop.ascensionsystem.util
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
+import com.lollipop.ascensionsystem.info.FiveElementsInfo
 import com.lollipop.ascensionsystem.info.RoadInfo
 import com.lollipop.ascensionsystem.info.RoleInfo
 import java.io.ByteArrayInputStream
@@ -11,6 +12,7 @@ import java.util.*
 import java.util.regex.Pattern
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
+import kotlin.collections.ArrayList
 
 
 /**
@@ -179,7 +181,34 @@ object ComputingCore {
         // 骨龄是0 (年龄与骨龄的计算标准为现实时间的50倍，约1周=1年)
         setValue(info, RoleInfo.BoneAge, 0F)
 
+        // 设置五行属性，灵根
+        info.set(RoleInfo.FiveElements, getFiveElementValue(tokenValue))
+
         // TODO
+    }
+
+    private fun getFiveElementValue(tokenValue: String): Array<FiveElementsInfo> {
+        val fiveElementList = ArrayList<FiveElementsInfo>()
+        val feToken = tokenValue.tokenKey(14).toInt(RADIX)
+        if (feToken and 1 > 0) {
+            fiveElementList.add(FiveElementsInfo.Wood)
+        }
+        if (feToken and (1 shl 1) > 0) {
+            fiveElementList.add(FiveElementsInfo.Water)
+        }
+        if (feToken and (1 shl 2) > 0) {
+            fiveElementList.add(FiveElementsInfo.Gold)
+        }
+        if (feToken and (1 shl 3) > 0) {
+            fiveElementList.add(FiveElementsInfo.Fire)
+        }
+        if (feToken and (1 shl 4) > 0) {
+            fiveElementList.add(FiveElementsInfo.Earth)
+        }
+        if (fiveElementList.isEmpty()) {
+            fiveElementList.addAll(FiveElementsInfo.values())
+        }
+        return fiveElementList.toArray(arrayOf())
     }
 
     private fun String.tokenKey(index: Int): String {
