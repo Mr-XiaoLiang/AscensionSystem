@@ -81,11 +81,13 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
         /**
          * 年龄
          */
+        @JvmStatic
         val Age = FloatRoleKey("Age", 0F, R.string.age, 0)
 
         /**
          * 骨龄
          */
+        @JvmStatic
         val BoneAge = FloatRoleKey("BoneAge", 0F, R.string.bone_age, 0)
 
         /**
