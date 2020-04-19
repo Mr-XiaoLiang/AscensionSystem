@@ -79,6 +79,16 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
             .dependOn(FloatRoleKey("AllLife", 100F, R.string.life, 0))
 
         /**
+         * 年龄
+         */
+        val Age = FloatRoleKey("Age", 0F, R.string.age, 0)
+
+        /**
+         * 骨龄
+         */
+        val BoneAge = FloatRoleKey("BoneAge", 0F, R.string.bone_age, 0)
+
+        /**
          * 灵根
          * 五行属性
          */
@@ -141,8 +151,6 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
         @JvmStatic
         val Talent = FloatRoleKey("Talent", 10F, R.string.talent, 0)
 
-//        val MajorPractice =
-
         /**
          * 空
          */
@@ -154,7 +162,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
          */
         @JvmStatic
         val Attributes = arrayOf(
-            IsMale, Race, Power, Mana, SoulEntity, Soul, Life, FiveElements, Lucky,
+            IsMale, Race, Power, Mana, SoulEntity, Soul, Life, Age, BoneAge, FiveElements, Lucky,
             Muscle, Speed, Perception, Talent
         )
 

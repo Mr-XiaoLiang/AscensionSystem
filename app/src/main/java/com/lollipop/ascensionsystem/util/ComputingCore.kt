@@ -28,7 +28,7 @@ object ComputingCore {
      * 获得一个64位长度的字符串
      * 并且每4位表示一个设备参数值，表示一项指标
      */
-    fun qualificationToken(context: Context): String {
+    private fun qualificationToken(context: Context): String {
         val tokenBuilder = StringBuilder()
 
         // 版本号(元神强度)
@@ -43,7 +43,7 @@ object ComputingCore {
         tokenBuilder.append(getRAM(context))
         // bootloader
         tokenBuilder.append(Build.BOOTLOADER.token())
-        // 获取厂商名
+        // 获取厂商名(寿命)
         tokenBuilder.append(Build.MANUFACTURER.token())
         // 获取产品名
         tokenBuilder.append(Build.PRODUCT.token())
@@ -152,30 +152,33 @@ object ComputingCore {
         info.set(RoleInfo.Race, RoadInfo.Truth.value)
 
         // 修为是0
-        info.set(RoleInfo.Power, 0F)
+        setValue(info, RoleInfo.Power, 0F)
 
-        // 初始法力为0
-        info.set(RoleInfo.Mana, 0F)
-        // 最大值。默认为100
-        RoleInfo.Mana.depend?.let {
-            info.set(it, 100F)
-        }
+        // 初始法力为0, 最大值。默认为100
+        setValue(info, RoleInfo.Mana, 0F, 100F)
 
         // 元神值 80 ~ 120
-        val soulEntityValue = tokenValue.tokenKey(0)
+        setValue(info, RoleInfo.SoulEntity, tokenValue.tokenKey(0)
             .toInt(RADIX)
-            .attrValue(random, 80F, 120F)
-        info.set(RoleInfo.SoulEntity, soulEntityValue)
-        // 最大值就是初始值，默认满值
-        RoleInfo.SoulEntity.depend?.let { info.set(it, soulEntityValue) }
+            .attrValue(random, 80F, 120F))
 
-        // 灵魂值
-        val soulValue = tokenValue.tokenKey(4)
+        // 灵魂值 60 ~ 120
+        setValue(info, RoleInfo.Soul, tokenValue.tokenKey(4)
             .toInt(RADIX)
-            .attrValue(random, 60F, 120F)
-        info.set(RoleInfo.Soul, soulValue)
-        // 最大值就是初始值，默认满值
-        RoleInfo.Soul.depend?.let { info.set(it, soulValue) }
+            .attrValue(random, 60F, 120F))
+
+
+        // 寿命 60 ~ 120
+        setValue(info, RoleInfo.Life, tokenValue.tokenKey(6)
+            .toInt(RADIX)
+            .attrValue(random, 60F, 120F))
+
+        // 年龄是0 (年龄与骨龄的计算标准为现实时间的50倍，约1周=1年)
+        setValue(info, RoleInfo.Age, 0F)
+
+        // 骨龄是0 (年龄与骨龄的计算标准为现实时间的50倍，约1周=1年)
+        setValue(info, RoleInfo.BoneAge, 0F)
+
         // TODO
     }
 
@@ -198,6 +201,11 @@ object ComputingCore {
         val floatingRange = benchmarkValue * 0.5F
         // 低于标准则为负数，最终叠加到原点的值上
         return ((benchmark - value) / benchmark * floatingRange) + benchmarkValue
+    }
+
+    private fun <T> setValue(info: RoleInfo, key: RoleInfo.RoleKey<T>, value: T, maxValue: T = value) {
+        info.set(key, value)
+        key.depend?.let { info.set(it, maxValue) }
     }
 
 }
