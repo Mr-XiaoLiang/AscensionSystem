@@ -3,7 +3,9 @@ package com.lollipop.ascensionsystem.util
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
+import android.provider.Settings
 import com.lollipop.ascensionsystem.info.FiveElementsInfo
+import com.lollipop.ascensionsystem.info.LuckyLevel
 import com.lollipop.ascensionsystem.info.RoadInfo
 import com.lollipop.ascensionsystem.info.RoleInfo
 import java.io.ByteArrayInputStream
@@ -24,6 +26,7 @@ object ComputingCore {
 
     private const val RADIX = 36
     private const val TOKEN_LENGTH = 4
+    private const val MAX_TOKEN = 0xFFFF
 
     /**
      * 计算资质的token凭证
@@ -33,38 +36,40 @@ object ComputingCore {
     private fun qualificationToken(context: Context): String {
         val tokenBuilder = StringBuilder()
 
-        // 版本号(元神强度)
+        // 0 版本号(元神强度)
         tokenBuilder.append(Build.VERSION.SDK_INT.token())
-        // 屏幕宽度
+        // 1 屏幕宽度
         tokenBuilder.append(context.resources.displayMetrics.widthPixels.token())
-        // 屏幕高度
+        // 2 屏幕高度
         tokenBuilder.append(context.resources.displayMetrics.heightPixels.token())
-        // 显示
+        // 3 显示
         tokenBuilder.append(Build.DISPLAY.token())
-        // RAM(灵魂强度)
+        // 4 RAM(灵魂强度)
         tokenBuilder.append(getRAM(context))
-        // bootloader
+        // 5 bootloader
         tokenBuilder.append(Build.BOOTLOADER.token())
-        // 获取厂商名(寿命)
+        // 6 获取厂商名(寿命)
         tokenBuilder.append(Build.MANUFACTURER.token())
-        // 获取产品名
+        // 7 获取产品名
         tokenBuilder.append(Build.PRODUCT.token())
-        // 获取手机品牌
+        // 8 获取手机品牌
         tokenBuilder.append(Build.BRAND.token())
-        // 获取手机型号
+        // 9 获取手机型号
         tokenBuilder.append(Build.MODEL.token())
-        // 获取手机主板名
+        // 10 获取手机主板名
         tokenBuilder.append(Build.BOARD.token())
-        // 设备名
+        // 11 设备名
         tokenBuilder.append(Build.DEVICE.token())
-        // 硬件名
+        // 12 硬件名
         tokenBuilder.append(Build.HARDWARE.token())
-        // 主机
+        // 13 主机
         tokenBuilder.append(Build.HOST.token())
-        // ID
+        // 14 ID(五行)
         tokenBuilder.append(Build.ID.token())
-        // 用户
+        // 15 用户
         tokenBuilder.append(Build.USER.token())
+        // 16 Android_ID
+        tokenBuilder.append((Settings.System.getString(context.contentResolver, Settings.Secure.ANDROID_ID)?:"0").token())
 
         return tokenBuilder.toString()
     }
@@ -184,7 +189,29 @@ object ComputingCore {
         // 设置五行属性，灵根
         info.set(RoleInfo.FiveElements, getFiveElementValue(tokenValue))
 
+        // 幸运值
+        info.set(RoleInfo.Lucky, getLucky(tokenValue.tokenKey(16).toInt(RADIX), random))
+
+
         // TODO
+    }
+
+    private fun getLucky(offset: Int, random: Random): LuckyLevel {
+        // 先天可以影响幸运，但是只有百分之一以内的浮动
+        val off = offset * 1F / MAX_TOKEN * 0.01F
+        if (random.nextFloat() < (0.4F + off)) {
+            if (random.nextFloat() < (0.3F + off)) {
+                if (random.nextFloat() < (0.2F + off)) {
+                    if (random.nextFloat() < (0.1F + off)) {
+                        return LuckyLevel.A
+                    }
+                    return LuckyLevel.B
+                }
+                return LuckyLevel.C
+            }
+            return LuckyLevel.D
+        }
+        return LuckyLevel.E
     }
 
     private fun getFiveElementValue(tokenValue: String): Array<FiveElementsInfo> {
