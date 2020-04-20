@@ -197,8 +197,11 @@ object ComputingCore {
     }
 
     private fun getLucky(offset: Int, random: Random): LuckyLevel {
-        // 先天可以影响幸运，但是只有百分之一以内的浮动
-        val off = offset * 1F / MAX_TOKEN * 0.01F
+        // 先天可以影响幸运，但是只有百分之五以内的浮动
+        // 原因在于1%太小，无法引起明显变化，但是太大又会形成干涉
+        // 因此，浮动范围为5%，也就是说，当自己努力了，在接近成功时，
+        // 那么先天会推一把
+        val off = offset * 1F / MAX_TOKEN * 0.05F
         if (random.nextFloat() < (0.4F + off)) {
             if (random.nextFloat() < (0.3F + off)) {
                 if (random.nextFloat() < (0.2F + off)) {
