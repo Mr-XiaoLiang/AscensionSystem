@@ -38,9 +38,9 @@ object ComputingCore {
 
         // 0 版本号(元神强度)
         tokenBuilder.append(Build.VERSION.SDK_INT.token())
-        // 1 屏幕宽度
+        // 1 屏幕宽度(力量)
         tokenBuilder.append(context.resources.displayMetrics.widthPixels.token())
-        // 2 屏幕高度
+        // 2 屏幕高度(敏捷)
         tokenBuilder.append(context.resources.displayMetrics.heightPixels.token())
         // 3 显示
         tokenBuilder.append(Build.DISPLAY.token())
@@ -192,6 +192,15 @@ object ComputingCore {
         // 幸运值
         info.set(RoleInfo.Lucky, getLucky(tokenValue.tokenKey(16).toInt(RADIX), random))
 
+        // 力量
+        setValue(info, RoleInfo.Muscle, tokenValue.tokenKey(1)
+            .toInt(RADIX)
+            .attrValue(random, 5F, 15F))
+
+        // 敏捷
+        setValue(info, RoleInfo.Speed, tokenValue.tokenKey(2)
+            .toInt(RADIX)
+            .attrValue(random, 5F, 15F))
 
         // TODO
     }
