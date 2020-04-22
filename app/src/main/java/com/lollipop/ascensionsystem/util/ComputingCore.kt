@@ -46,11 +46,11 @@ object ComputingCore {
         tokenBuilder.append(Build.DISPLAY.token())
         // 4 RAM(灵魂强度)
         tokenBuilder.append(getRAM(context))
-        // 5 bootloader
+        // 5 bootloader(感知)
         tokenBuilder.append(Build.BOOTLOADER.token())
         // 6 获取厂商名(寿命)
         tokenBuilder.append(Build.MANUFACTURER.token())
-        // 7 获取产品名
+        // 7 获取产品名(天赋)
         tokenBuilder.append(Build.PRODUCT.token())
         // 8 获取手机品牌
         tokenBuilder.append(Build.BRAND.token())
@@ -199,6 +199,16 @@ object ComputingCore {
 
         // 敏捷
         setValue(info, RoleInfo.Speed, tokenValue.tokenKey(2)
+            .toInt(RADIX)
+            .attrValue(random, 5F, 15F))
+
+        // 感知
+        setValue(info, RoleInfo.Perception, tokenValue.tokenKey(5)
+            .toInt(RADIX)
+            .attrValue(random, 5F, 15F))
+
+        // 天赋
+        setValue(info, RoleInfo.Talent, tokenValue.tokenKey(7)
             .toInt(RADIX)
             .attrValue(random, 5F, 15F))
 
