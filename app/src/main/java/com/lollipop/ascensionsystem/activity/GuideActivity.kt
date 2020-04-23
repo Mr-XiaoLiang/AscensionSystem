@@ -1,13 +1,13 @@
 package com.lollipop.ascensionsystem.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.lollipop.ascensionsystem.R
-import com.lollipop.ascensionsystem.util.FullLoadingHelper
-import com.lollipop.ascensionsystem.util.lifecycleBinding
-import com.lollipop.ascensionsystem.util.onStart
+import com.lollipop.ascensionsystem.info.RoleInfo
+import com.lollipop.ascensionsystem.util.*
 import com.lollipop.ascensionsystem.view.CheckedButton
 import kotlinx.android.synthetic.main.activity_guide.*
 
@@ -43,6 +43,10 @@ class GuideActivity : AppCompatActivity() {
         }
         nextBtn.setOnClickListener {
             FullLoadingHelper.showIn(window.decorView as ViewGroup).show()
+            doAsync {
+                ComputingCore.initRole(this@GuideActivity)
+                startActivity(Intent(this@GuideActivity, MainActivity::class.java))
+            }
         }
     }
 

@@ -148,7 +148,7 @@ object ComputingCore {
     /**
      * 初始化信息
      */
-    fun initRole(context: Context, info: RoleInfo) {
+    fun initRole(context: Context, info: RoleInfo = RoleInfo(context)) {
         if (info.get(RoleInfo.IsInit)) {
             return
         }
@@ -212,7 +212,7 @@ object ComputingCore {
             .toInt(RADIX)
             .attrValue(random, 5F, 15F))
 
-        // TODO
+        info.set(RoleInfo.IsInit, true)
     }
 
     private fun getLucky(offset: Int, random: Random): LuckyLevel {
