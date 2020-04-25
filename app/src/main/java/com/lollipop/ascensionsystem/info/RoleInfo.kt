@@ -257,6 +257,16 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
     open class FloatRoleKey(key: String, defValue: Float, name: Int, val barColor: Int) :
         RoleKey<Float>(key, defValue, name) {
 
+        fun progress(info: RoleInfo): Float {
+            val all = depend
+            return if (all != null) {
+                info.get(this) / info.get(all)
+            } else {
+                val value = info.get(this)
+                value - value.toInt()
+            }
+        }
+
         override fun createValue(value: Float, context: Context): String {
             return value.toString()
         }
@@ -287,7 +297,7 @@ class RoleInfo(context: Context) : BaseInfo<RoleInfo.RoleKey<*>>("RoleInfo", con
     ) :
         IntRoleKey(key, defValue, name) {
         override fun createValue(value: Int, context: Context): String {
-            return context.getString(valueArray[value.range(0, valueArray.size)])
+            return context.getString(valueArray[value.range(0, valueArray.size - 1)])
         }
     }
 

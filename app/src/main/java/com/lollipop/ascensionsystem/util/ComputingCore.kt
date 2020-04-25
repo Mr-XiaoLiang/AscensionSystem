@@ -148,12 +148,15 @@ object ComputingCore {
     /**
      * 初始化信息
      */
-    fun initRole(context: Context, info: RoleInfo = RoleInfo(context)) {
+    fun initRole(context: Context, isMale: Boolean, info: RoleInfo = RoleInfo(context)) {
         if (info.get(RoleInfo.IsInit)) {
             return
         }
         val tokenValue = qualificationToken(context)
         val random = Random()
+
+        // 设置性别
+        info.set(RoleInfo.IsMale, isMale)
 
         // 初始种族始终是修仙
         info.set(RoleInfo.Race, RoadInfo.Truth.value)

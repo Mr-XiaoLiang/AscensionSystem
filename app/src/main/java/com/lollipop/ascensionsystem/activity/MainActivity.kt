@@ -28,7 +28,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        roleInfo.set(RoleInfo.Power, 2.4F)
         initAttributesList()
         initModel()
     }
@@ -61,7 +60,7 @@ class MainActivity : BaseActivity() {
                 is RoleInfo.FloatRoleKey -> {
                     KeyValueHolderInfo(0,
                         getString(attr.name), attr.getValue(this, roleInfo),
-                        roleInfo.get(attr), attr.barColor)
+                        attr.progress(roleInfo), attr.barColor)
                 }
                 else -> {
                     KeyValueHolderInfo(0,

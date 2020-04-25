@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.lollipop.ascensionsystem.R
-import com.lollipop.ascensionsystem.info.RoleInfo
+import com.lollipop.ascensionsystem.info.SystemPreference
 import com.lollipop.ascensionsystem.util.*
 import com.lollipop.ascensionsystem.view.CheckedButton
 import kotlinx.android.synthetic.main.activity_guide.*
@@ -19,6 +19,8 @@ class GuideActivity : AppCompatActivity() {
     companion object {
         private const val DURATION = 1500L
     }
+
+    private var isMale = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +42,17 @@ class GuideActivity : AppCompatActivity() {
             .borderColor(R.color.colorPrimary)
             .borderWidth(5F)
             .onCheckedChange {
-        }
+
+                isMale = it == manBtn
+
+            }
         nextBtn.setOnClickListener {
             FullLoadingHelper.showIn(window.decorView as ViewGroup).show()
             doAsync {
-                ComputingCore.initRole(this@GuideActivity)
+                ComputingCore.initRole(this@GuideActivity, isMale)
+                SystemPreference.from(this@GuideActivity).callInit()
                 startActivity(Intent(this@GuideActivity, MainActivity::class.java))
+                finish()
             }
         }
     }
